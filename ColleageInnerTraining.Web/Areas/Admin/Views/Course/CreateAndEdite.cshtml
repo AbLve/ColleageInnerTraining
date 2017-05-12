@@ -1,0 +1,351 @@
+﻿@using Abp.Web.Mvc.Extensions;
+@using ColleageInnerTraining.Web.Navigation;
+@using ColleageInnerTraining.Common.Utils;
+@using ColleageInnerTraining.Common;
+@model ColleageInnerTraining.Application.Dtos.CourseInfoEditDto
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Coursees;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Coursees;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="Container w">
+    <div class="rightTop">
+        <p>课程管理</p>
+        <ul class="subnav">
+            <li>
+                <a class="btn btn_yanhse" href="/Admin/Course/Index">返回</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content fr">
+        <div class="h20"></div>
+        @using (Html.BeginForm("Save", "Course", FormMethod.Post, new { id = "fmCourse", enctype = "multipart/form-data", role = "form" }))
+        {
+            <div class="hidden">
+                @Html.HiddenFor(t => t.Id)
+                @Html.HiddenFor(t => t.Type)
+                @Html.HiddenFor(t => t.TeacherId)
+                @Html.HiddenFor(t => t.TeacherName)
+                @Html.HiddenFor(t => t.ImageUrl)
+                @Html.HiddenFor(t => t.Content)
+                @Html.HiddenFor(t => t.ExaminationId)
+                @Html.HiddenFor(t => t.Status)
+                @Html.HiddenFor(t => t.ReadTimes)
+                @Html.HiddenFor(t => t.CollectionTimes)
+                @Html.HiddenFor(t => t.PollId)
+            </div>
+            @Html.AntiForgeryToken()
+
+                        <!-- 课程类型 -->
+            <div id="courseType">
+                <ul class="content_form">
+                    <li>
+                        <label>课程类型：</label>
+                        <div class="knowledge-tab">
+                            <a class="cur">系列课</a>
+                            <a>直播</a>
+                            <a>点播</a>
+                            <a>线下</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="h20"></div>
+                        <div class="clearfix"></div>
+                    </li>
+                    <li>
+                        <a class="btn btn_yanhse fl mf120" onclick="courseTypeNext()">下一步</a>
+                    </li>
+                </ul>
+            </div>
+
+                        <!-- 开课信息 -->
+            <div id="courseDetailed">
+                <div class="password-main">
+                    <div class="jindu mb10">
+                        <p class="jindu-img"><span class="step1"></span><span class="bar1 bar"></span><span class="step2"></span><span class="bar2 bar"></span><span class="step3"></span><span class="bar3 bar"></span><span class="step4"></span></p>
+                        <p class="jindu-word"><span>开课信息</span><span>选择授课PPT</span><span>课程介绍</span><span>完成</span></p>
+                    </div>
+                    <div class="h20"></div>
+                </div>
+
+                <ul class="content_form">
+                    <li>
+                        <label><span class="yanhse">*</span>课程名称：</label>
+                        @Html.TextBoxFor(t => t.CourseName, new { @class = "form-control short", @required = "required" })
+                    </li>
+                    <li>
+                        <label><span class="yanhse">*</span>课程分类：</label>
+                        @Html.DropDownListFor(t => t.CategoryType, new List<SelectListItem>(), new { @class = "form-control short", @required = "required" })
+                    </li>
+                    <li>
+                        <label><span class="yanhse">*</span>内训师：</label>
+                        @Html.DropDownList("InternalT", ViewBag.TeacharData as IEnumerable<SelectListItem>, new { @class = "form-control short", @required = "required" })
+                    </li>
+
+                    <li>
+                        <label>考试：</label>
+                        <select id="selectexamin" class="form-control short"></select>
+                    </li>
+
+                    <li>
+                        <label>问卷：</label>
+                        <select id="selectPoll" class="form-control short"></select>
+                    </li>
+
+                    @*<li>
+                        <label>第一阶段名称：</label>
+                        @Html.TextBoxFor(t => t.StageName, new { @class = "form-control short" })
+                    </li>*@
+
+                    <li>
+                        <label><span class="yanhse">*</span>开课开始时间：</label>
+                        @Html.TextBoxFor(t => t.StartTime, new { @class = "form-control", @placeholder = "请选择时间", @required = "required"  })
+                    </li>
+
+                    <li>
+                        <label><span class="yanhse">*</span>开课结束时间：</label>
+                        @Html.TextBoxFor(t => t.EndTime, new { @class = "form-control", @placeholder = "请选择时间", @required = "required" })
+                    </li>
+
+                    <li>
+                        <label>课程时长：</label>
+                        @Html.TextBoxFor(t => t.TimeLength,
+                       new { @class = "form-control short", @required = "required", @maxlength = 3 })
+                    </li>
+
+                    <li>
+                        <label>培训地点：</label>
+                        @Html.TextBoxFor(t => t.TrainingLocation, new { @class = "form-control short" })
+                    </li>
+
+                    <li>
+                        <div class="h20"></div>
+                        <div class="clearfix"></div>
+                    </li>
+                    <li>
+                        <a class="btn btn_yanhse fl mf120" onclick="courseDetailedStep()">上一步</a>
+                        <a class="btn btn_yanhse fl mf120" onclick="courseDetailedNext()">下一步</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 授课PPT -->
+            <div id="teachingPPT">
+                <div class="password-main">
+                    <div class="jindu mb10">
+                        <p class="jindu-img">
+                            <span class="step1"></span>
+                            <span class="bar1 bar on"></span>
+                            <span class="step2 on"></span>
+                            <span class="bar2 bar"></span>
+                            <span class="step3"></span>
+                            <span class="bar3 bar"></span>
+                            <span class="step4"></span>
+                        </p>
+                        <p class="jindu-word"><span>开课信息</span><span>选择授课PPT</span><span>课程介绍</span><span>完成</span></p>
+                    </div>
+                    <div class="h20"></div>
+                </div>
+
+                <ul class="content_form">
+                    <li>
+                        <label>第一节名称：</label>
+                        <input type="text" class="form-control short" />
+                    </li>
+                    <li>
+                        <div class="h20"></div>
+                        <div class="clearfix"></div>
+                    </li>
+                    <li>
+                        <label>选择素材：</label>
+                        <input type="text" class="form-control short" />
+                        <input type="submit" class="btn btn_yanhse fl mf30" value="搜索" />
+                    </li>
+
+
+
+
+                    <li>
+                        <div class="h20"></div>
+                        <div class="clearfix"></div>
+                    </li>
+                </ul>
+
+
+                <table class="table_info">
+                    <tbody>
+                        <tr>
+                            <th width="40"><input id="SelectAll" type="checkbox" onclick="selectAll()"></th>
+                            <th class="text-left">PPT名称</th>
+                            <th class="col-xs-2">转换状态</th>
+                            <th class="col-xs-2">资源大小</th>
+                            <th class="col-xs-2">更新时间</th>
+                        </tr>
+                        <tr>
+                            <td><input id="subcheck" type="checkbox" onclick="setSelectAll()"></td>
+                            <td class="text-left">
+                                <p class="heise">新建 Microsoft PowerPoint 演示文稿.ppt</p>
+                            </td>
+                            <td>转换成功</td>
+                            <td>34k</td>
+                            <td>2017-03-31</td>
+                        </tr>
+                        <tr>
+                            <td><input id="subcheck" type="checkbox" onclick="setSelectAll()"></td>
+                            <td class="text-left">
+                                <p class="heise">1.png</p>
+
+                            </td>
+                            <td>转换成功</td>
+                            <td>34k</td>
+                            <td>2017-03-31</td>
+                        </tr>
+                        <tr>
+                            <td><input id="subcheck" type="checkbox" onclick="setSelectAll()"></td>
+                            <td class="text-left">
+                                <p class="heise">演示文档.wmv</p>
+
+                            </td>
+                            <td>转换成功</td>
+                            <td>34k</td>
+                            <td>2017-03-31</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="page-foot">
+                    <p>
+                        <a href=""><span class="prev">上一页</span></a>
+                        <a href=""><span class="active">1</span></a>
+                        <a href=""><span>2</span></a>
+                        <a href=""><span>3</span></a>
+                        <a href=""><span class="prev">下一页</span></a>
+                    </p>
+                </div>
+
+                <button class="btn btn_yanhse fl mf120">上一步</button>
+                <button class="btn btn_yanhse fl mf120">下一步</button>
+            </div>
+
+
+                        <!-- 课程介绍 -->
+            <div id="courseIntroduce">
+                <div class="password-main">
+                    <div class="jindu mb10">
+                        <p class="jindu-img">
+                            <span class="step1"></span>
+                            <span class="bar1 bar on"></span>
+                            <span class="step2 on"></span>
+                            <span class="bar2 bar on"></span>
+                            <span class="step3 on"></span>
+                            <span class="bar3 bar"></span>
+                            <span class="step4"></span>
+                        </p>
+                        <p class="jindu-word"><span>开课信息</span><span>选择授课PPT</span><span>课程介绍</span><span>完成</span></p>
+                    </div>
+                    <div class="h20"></div>
+                </div>
+
+                <ul class="content_form">
+                    <li>
+                        <label>上传图片：</label>
+                        <div class="col-xs-7 fl uploadfile mb10">
+                            <div id="preview">
+                                <img class="imghead" id="imghead" width=100% height=auto border=0>
+                            </div>
+                            <input type="file" id="uploadify_Head" /><br /> <br />
+                            <span class="">图片应为jpg、png格式，建议为<b class="yanhse">190*170</b>像素</span>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </li>
+                    <li>
+                        <label>课程简介：</label>
+                        <div class="col-xs-7 fl">
+                            @Html.TextAreaFor(t => t.Description, new { @class = "form-control ovh340 mb10" })
+                            <div class="clearfix"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <label>课程详情：</label>
+                        <div>
+                            <script id="editor" type="text/plain" class="details">
+                            </script>
+                        </div>
+                    </li>
+                    <li>
+                        <label>课程展示端：</label>
+                        @Html.DropDownListFor(t => t.DisplayPosition, UiKit.PopulateDropdown<Display>("请选择"), new { @class = "form-control short", @required = "required" })
+                    </li>
+                    <li>
+                        <div class="h20"></div>
+                        <div class="clearfix"></div>
+                    </li>
+
+                    <li>
+                        <div class="h20"></div>
+                        <div class="clearfix"></div>
+                    </li>
+                    <li>
+                        <a class="btn btn_yanhse fl mf120" onclick="courseIntroduceStep()">上一步</a>
+
+                        <input type="submit" id="subcourse" class="btn btn_yanhse fl mf50" value="@(Model.Status == 3 ? "提交审核" : "提交")" />
+                    </li>
+                </ul>
+            </div>
+
+
+
+            <!-- 完成 -->
+            <div id="complete">
+                <div class="password-main">
+                    <div class="jindu mb10">
+                        <p class="jindu-img">
+                            <span class="step1"></span>
+                            <span class="bar1 bar on"></span>
+                            <span class="step2 on"></span>
+                            <span class="bar2 bar on"></span>
+                            <span class="step3 on"></span>
+                            <span class="bar3 bar on"></span>
+                            <span class="step4 on"></span>
+                        </p>
+                        <p class="jindu-word"><span>开课信息</span><span>选择授课PPT</span><span>课程介绍</span><span>完成</span></p>
+                    </div>
+                    <div class="h20"></div>
+                </div>
+            </div>
+
+        }
+    </div>
+    <div class="clearfix"></div>
+
+</div>
+<script type="text/javascript">
+    $(function(){    
+        type =  @Model.Type;
+        contentText = '@(Model.Content == "" || Model.Content == null ? "" : Model.Content)';
+        iurl = '@Model.ImageUrl';
+        examinId = @Model.ExaminationId;
+        start = '@Model.StartTime';
+        end = '@Model.EndTime';
+        teacharId = @Model.TeacherId;
+        $("#CategoryType").val(@Model.CategoryType);
+        pollId = @Model.PollId;      
+        
+        $('#StartTime').datetimepicker({
+            value:start, step: 5, format: 'Y-m-d H:i',
+            formatDate: 'Y-m-d H:i'
+        });
+        $('#EndTime').datetimepicker({
+            value: end, step: 5, format: 'Y-m-d H:i',
+            formatDate: 'Y-m-d H:i'
+        });
+
+
+    });
+    $("#TimeLength").keyup(function(){           
+        $(this).val($(this).val().replace(/[^0-9.]/g,''));  
+    });
+
+</script>
+<script src="~/Areas/Admin/Views/Course/CreateAndEdite.js?t=@DateTime.Now"></script>

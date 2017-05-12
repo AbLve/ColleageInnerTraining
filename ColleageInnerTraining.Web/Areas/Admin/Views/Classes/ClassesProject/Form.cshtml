@@ -1,0 +1,57 @@
+﻿@model ColleageInnerTraining.Application.Dtos.ClassTrainingInfoEditDto
+<div class="Container w">
+    <div class="side_menu fl">
+        <h3 class="f14 c66">班级项目管理</h3>
+        <div class="side_nav">
+            <a class="cur">班级项目管理</a>
+        </div>
+    </div>
+    <div class="content fr">
+        <div class="title_btn fl w100">
+            <div class="fl">
+                @*<a class="btn btn_yanhse fl mf30" href="ClassesManageCreate?cId=0">添加</a>*@
+                <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+            </div>
+        </div>
+        @*@using (Html.BeginForm("ClassesProjectForm", "Classes", FormMethod.Post, new { @class = "form-horizontal" }))
+            {*@
+        <form id="form" method="post" action="">
+            @*<label style="color:red;margin-left:220px;" id="errorlal">@Session["ErrorMsg"]@{Session["ErrorMsg"] = null;}</label>*@
+            @Html.AntiForgeryToken()
+            <ul class="content_form">
+                <li>
+                    @Html.HiddenFor(t => t.ClassId)
+                    <input type="hidden" id="cname" value="@Request["cName"]" />
+                    @Html.Label("项目类型：")
+                    @Html.DropDownListFor(t => t.TrainingType, ViewBag.typeSel as List<SelectListItem>, new { @class = "form-control", @required = "required", @placeholder = "请选择类型", @onchange = "typeChange(this)" })
+                    <script>
+                        $('#ClassId').val(@Request["cId"]);
+                    </script>
+                </li>
+                <li>
+                    @Html.Label("项目名称：")
+                    @Html.HiddenFor(t => t.TypeId)
+                    @Html.HiddenFor(t => t.Name)
+                    @Html.DropDownList("prosel", ViewBag.prosel as List<SelectListItem>, new { @class = "form-control", @required = "required", @placeholder = "请选择项目" })
+                </li>
+                <li>
+                    @Html.Label("开始时间：")
+                    @Html.TextBoxFor(t => t.StartTime, new { @class = "form-control input-wdatepicker", @required = "required", @readOnly = "readOnly", @onfocus = "WdatePicker()" })
+                </li>
+                <li>
+                    @Html.Label("结束时间：")
+                    @Html.TextBoxFor(t => t.EndTime, new { @class = "form-control input-wdatepicker", @required = "required", @readOnly = "readOnly", @onfocus = "WdatePicker()" })
+                </li>
+                <li>
+                    <input type="button" onclick="sf()" class="btn btn_yanhse fl mf120" value="提交" />
+                    <input type="reset" class="btn btn_huise fl mf50" value="取消" />
+                    @*onclick="location.href = '/Admin/Classes/ClassesProjectIndex?cNmae=' + $('#cname').val() + '&cId=' + $('#ClassId').val()*@
+                </li>
+            </ul>
+        </form>
+
+        @*}*@
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/Classes/ClassesProject/form.js?t=@DateTime.Now"></script>

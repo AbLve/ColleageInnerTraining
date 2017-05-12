@@ -1,0 +1,24 @@
+﻿@model List<ColleageInnerTraining.Application.Dtos.JobPostListDto>
+<table class="table_info">
+    <tr>
+        <th class=" text-center">岗位名称</th>
+        <th class="col-xs-3 text-center">是否有效</th>
+        @*<th class="col-xs-2 text-center">创建人</th>*@
+        <th class="col-xs-3 text-center">创建时间</th>
+        <th class="col-xs-3 text-center">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td >@item.Name</td>
+            <td>@(item.Enabled ? "启用" : "禁用")</td>
+            @*<td>@item.CreationName</td>*@
+            <td>@item.CreationTime.ToString("yyyy-MM-dd")</td>
+            <td>
+                <a class="yanhse" href="/Admin/System/JobPostCreate?id=@item.Id">修改</a> |
+                <a class="lanse" onclick="del(@item.Id)">删除</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}

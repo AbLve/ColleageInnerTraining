@@ -1,0 +1,53 @@
+﻿@using Abp.Web.Mvc.Extensions;
+@using ColleageInnerTraining.Web.Navigation;
+@using ColleageInnerTraining.Common.Utils;
+@using ColleageInnerTraining.Common;
+@model ColleageInnerTraining.Application.Dtos.CourseInfoEditDto
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Coursees;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Coursees;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+    <div class="rightTop">
+        <p>课程管理</p>
+        <ul class="subnav">
+            <li>
+                <a class="btn btn_yanhse" href="/Admin/Course/Index">返回</a>
+            </li>
+        </ul>
+    </div>
+
+    @Html.HiddenFor(t => t.Id)
+    <div class="h20"></div>
+    <ul class="content_form">
+        <li>
+            <label>课程名称：</label>
+            @Html.TextBoxFor(t => t.CourseName, new { @class = "form-control short", @readonly= "readonly" })
+        </li>
+        <li>
+            <label>考试：</label>
+            <select id="selectexamin" class="form-control short"></select>
+        </li>
+        <li>
+            <label>问卷：</label>
+            <select id="selectPoll" class="form-control short"></select>
+        </li>
+        <li>
+            <div class="h20"></div>
+            <div class="clearfix"></div>
+        </li>
+        <li>
+            <div class="h20"></div>
+            <div class="clearfix"></div>
+        </li>
+        <li>
+            <input type="button" id="subcourse" class="btn btn_yanhse fl mf120" value="提交" />
+        </li>
+    </ul>
+</div>
+<script src="~/Areas/Admin/Views/Course/CurExaDisposition.js?v=@DateTime.Now"></script>
+<script type="text/javascript">
+    var ExamId = @Model.ExaminationId;
+    var PollId = @Model.PollId;
+</script>

@@ -1,0 +1,42 @@
+﻿@using ColleageInnerTraining.Web.Navigation
+@{
+    //Layout = "";
+    ViewBag.CurrentPageName = PageNames.Managemnet.Classes;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Classes;
+}
+<div class="Container w">
+    <div class="side_menu fl">
+        <h3 class="f14 c66">班级管理</h3>
+        <div class="side_nav">
+            <a class="cur">班级管理</a>
+        </div>
+    </div>
+    <div class="content fr">
+        <div class="rightTop">
+            <p>班级管理</p>
+            <ul class="subnav">
+                <li>
+                    <a class="btn btn_yanhse" href="/Admin/Classes/ClassesManageCreate">新增</a>
+                </li>
+            </ul>
+        </div>
+        <div class="title_btn fl w100">
+            <div class="fl">
+                <label class="fl f14 l28">班级名称：</label>
+                <input type="text" id="search" class="form-control w160 fl" />
+                <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+                @*<input type="button" id="test" value="测试"/>
+                    <script>
+
+                        $.get("test", function (data) { alert(11); });
+                    </script>*@
+            </div>
+        </div>
+        <div id="dataListDiv">
+            @Html.Action("GetCManageDataList")
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/Classes/ClassesManage/index.js?t=@DateTime.Now"></script>
+

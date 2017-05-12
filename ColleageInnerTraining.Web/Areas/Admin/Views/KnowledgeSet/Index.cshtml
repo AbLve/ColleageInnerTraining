@@ -1,0 +1,48 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@using ColleageInnerTraining.Common;
+@using ColleageInnerTraining.Common.Utils;
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.KnowledgeInfo;
+    ViewBag.MenuId = PageNames.ManagemnetKey.KnowledgeInfo;
+    var list = new List<SelectListItem> { new SelectListItem { Text = "部门", Value = "0" }, new SelectListItem { Text = "岗位", Value = "1" } };
+
+}
+<div class="Container w">
+
+    <div class="side_menu fl">
+        <h3 class="f14 c66">知识库管理</h3>
+        <div class="side_nav">
+            <a class="cur" href="javascript:">其他设置</a>
+        </div>
+    </div>
+
+    <div class="content fr">
+        <div class="rightTop">
+            <p><label style="color:blue">@(Request["kName"])</label>其他设置</p>
+            <ul class="subnav">
+                <li>
+                    <a class="btn btn_yanhse"  href="/Admin/KnowledgeInfo/Index">返回</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="title_btn fl w100 mt50">
+            <div class="fl">
+                <input type="hidden" value="@Request["kId"]" id="kId" />
+                <label class="fl f14 l28">类型：</label>
+                @Html.DropDownList("Type", list, new { @class = "form-control w160 fl", @onchange = "change()" })
+                <label class="fl f14 l28">名称：</label>
+                @Html.DropDownList("Department", ViewBag.DepartmentData as IEnumerable<SelectListItem>, new { @class = "form-control w160 fl" })
+                @Html.DropDownList("job", ViewBag.JobPostData as IEnumerable<SelectListItem>, new { @class = "form-control w160 fl hidden" })
+                <input class="btn btn_yanhse fl mf30" type="submit" value="关联知识点" onclick="set()" />
+            </div>
+        </div>
+
+        <div id="dataListDiv">
+            @Html.Action("GetDataList")
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/KnowledgeSet/Index.js?v=@DateTime.Now"></script>

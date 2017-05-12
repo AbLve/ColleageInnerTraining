@@ -1,0 +1,20 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Wap.Models.ChangeViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Wap.Member; //页面路径
+}
+
+<form method="post" action="~/Wap/Member/UserPwd">
+    <ul class="user_ul bgbai wpd94">
+        @Html.AntiForgeryToken()
+        <li>
+            输入旧密码<input name="oldpassword" id="oldpassword" type="password" required placeholder="输入旧密码"  />
+        </li>
+        <li>输入新密码<input id="password" name="password" type="password" value="" required placeholder="支持数字、字母和符号" /></li>
+        <li>确认新密码<input id="repassword" name="repassword" type="password" value="" required placeholder="支持数字、字母和符号" /></li>
+    </ul>
+    <div >
+        <input type="submit" style="margin:10px 3% 10px 2%; width:95%; height:30px;" value="提交修改 @Model.SuccessMessage" />
+    </div>
+</form>

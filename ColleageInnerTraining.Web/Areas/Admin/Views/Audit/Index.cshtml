@@ -1,0 +1,29 @@
+﻿@using ColleageInnerTraining.Common
+@using ColleageInnerTraining.Common.Utils
+@using ColleageInnerTraining.Web.Navigation
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Audit;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Audit;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+    <div class="rightTop">
+        <p>知识库审核</p>
+        <ul class="subnav">
+        </ul>
+    </div>
+    <div class="title_btn fl w100">
+        <div class="fl">
+            <label class="fl f14 l28">标题：</label>
+            <input type="text" id="search" class="form-control w160 fl" />
+            <label class="fl f14 l28 mf30">分类：</label>
+            @Html.DropDownList("TypeId", new List<SelectListItem>(), "请选择", new { @class = "form-control w160 fl", @onchange = "change()" })
+            <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+        </div>
+    </div>
+    <div id="dataListDiv">
+        @Html.Action("GetDataList")
+    </div>
+</div>
+<div class="clearfix"></div>
+<script src="~/Areas/Admin/Views/Audit/index.js?t=@DateTime.Now"></script>

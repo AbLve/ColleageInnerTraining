@@ -1,0 +1,57 @@
+﻿@using Abp.Application.Navigation
+@using Abp.Collections.Extensions
+@using Abp.Extensions
+@using ColleageInnerTraining.Web.Views
+@model ColleageInnerTraining.Web.Models.Layout.HeaderViewModel
+
+<div class="header">
+    <div class="w">
+        <div class="header_con fr fost c99">
+            <ul class="fl navigation">
+                @if (Model.UserName.IsNullOrEmpty())
+                {
+                    <li><a href="/Account/Login">登录</a></li>}
+                else
+                {
+                    <li><a href="/Member/index">@Model.UserName</a></li>
+                    <li><a href="/Account/LogOut">退出</a></li>
+                }
+                <li><a href=""><img src="/images/MESSAGE.png" /></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--header-->
+<div class="Logobar">
+    <div class="w">
+        <a class="logo fl logo_login" href="index.html" title="国资商学院">
+            <img class="fl" src="/images/logo.png" alt="国资商学院" />
+        </a>
+        <div class="fr">
+            <img src="/images/logobar.jpg" />
+        </div>
+    </div>
+</div>
+
+
+<div class="index-nav">
+    <div class="w">
+        @*<div class="nav-l fl">
+                <dl>
+                    <dt class="big-title f18 baise text-center"><a href="~/Admin/Home/Index">商学院管理系统</a></dt>
+                </dl>
+            </div>*@
+        <div class="nav-r fl">
+            <ul>
+                <li ><a href="~/Admin/Home/Index">商学院管理系统</a></li>
+                @for (int i = 0; i < Model.Menu.Count; i++)
+                {
+                    var menu = Model.Menu[i];
+                    <li class="@(Model.CurrentPageName.Contains(menu.Path)  == true ? "active":"")">
+                        <a href="@menu.Url">@menu.MenuName</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

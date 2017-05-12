@@ -1,0 +1,48 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@using ColleageInnerTraining.Common;
+@using ColleageInnerTraining.Common.Utils;
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Course;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Course;
+}
+
+<div class="Container w">
+    <div class="side_menu fl">
+        <h3 class="f14 c66">课程管理</h3>
+        <div class="side_nav">
+            <a class="cur" href="/Admin/CourseExamination/Index?courseId=@ViewBag.CourseId">课程部门岗位管理</a>
+        </div>
+    </div>
+    <div class="content fr">
+        <div class="rightTop">
+            <p>课程管理</p>
+            <ul class="subnav">
+                <li>
+                    <a class="btn btn_yanhse" href="/Admin/Course/Index">返回</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="title_btn fl w100 mt50">
+            <div class="fl">
+                <label class="fl f14 l28 mf30">部门：</label>
+                @Html.DropDownList("tetDepartment", ViewBag.DepartmentData as IEnumerable<SelectListItem>, (""), new { @class = "form-control w160 fl" })
+                <label class="fl f14 l28 mf30">岗位：</label>
+                @Html.DropDownList("txtJobPost", ViewBag.JobPostData as IEnumerable<SelectListItem>, (""), new { @class = "form-control w160 fl" })
+                <input class="btn btn_yanhse fl mf30" type="button" value="添加课程关联" onclick="set()" />
+            </div>
+        </div>
+
+        <div id="dataListDiv">
+            @Html.Action("GetCBDJManageDataList")
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        CourseID = '@ViewBag.CourseId';
+    })
+</script>
+<script src="~/Areas/Admin/Views/CourseBoundDeJob/Index.js"></script>

@@ -1,0 +1,31 @@
+﻿@using ColleageInnerTraining.Common
+@using ColleageInnerTraining.Common.Utils
+@using ColleageInnerTraining.Web.Navigation
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Notice;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Notice;
+
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+    <div class="rightTop">
+        <p>公告管理</p>
+        <ul class="subnav">
+            <li>
+                <a class="btn btn_yanhse" href="/Admin/Notice/Create">新增</a>
+            </li>
+        </ul>
+    </div>
+    <div class="title_btn fl w100">
+        <div class="fl">
+            <label class="fl f14 l28">关键字：</label>
+            <input type="text" id="search" class="form-control w160 fl" placeholder="标题或创建人"/>
+            <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+        </div>
+    </div>
+    <div id="dataListDiv">
+        @Html.Action("GetDataList")
+    </div>
+</div>
+<div class="clearfix"></div>
+<script src="~/Areas/Admin/Views/Notice/index.js?t=@DateTime.Now"></script>

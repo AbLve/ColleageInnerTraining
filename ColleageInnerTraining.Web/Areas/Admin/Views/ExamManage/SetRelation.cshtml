@@ -1,0 +1,103 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using Abp.Application.Services.Dto
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.ExamViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.ExamManage; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Exam;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<script type="text/javascript">
+
+    var examId = @Model.ExamId;
+
+</script>
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <div class="fl">
+            <a class="btn btn_yanhse fl mf30" href="SetRelation?examId=@Model.ExamId">配置必考关系</a>
+            <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+        </div>
+    </div>
+
+    <div class="title_btn fl w100 mt20">
+        <label class="fl f14 l28 mf30">考试名称：</label>
+        <label id="examName" class="fl f14 l28 mf30"></label>
+        <label class="fl f14 l28 mf30">类型：</label>
+        <select id="typeId" class="fl f14 l28 mf30">
+            <option value="0">部门</option>
+            <option value="1">岗位</option>
+            <option value="2">班级</option>
+        </select>
+        @Html.DropDownList("departmentId", Model.departLists.Select(i => i.ToSelectListItem()),
+                                new
+                                {
+                                    @class = "fl f14 l28 mf30",
+                                    data_live_search = "true",
+                                    data_none_selected_text = "",
+                                    id = "departmentId"
+                                })
+
+
+
+
+        <select id="postId" style="display:none" class="fl f14 l28 mf30">
+            @for (int i = 0; i < Model.posts.Count; i++)
+            {
+                var post = Model.posts[i];
+                <option value="@post.Id,@post.Name">@post.Name</option>
+
+            }
+        </select>
+
+        <select id="classesId" style="display:none" class="fl f14 l28 mf30">
+            @for (int i = 0; i < Model.classes.Count; i++)
+            {
+                var classes = Model.classes[i];
+                <option value="@classes.Id,@classes.ClassesName">@classes.ClassesName</option>
+
+            }
+        </select>
+
+        <div class="fl">
+            <a class="btn btn_yanhse fl mf30" id="formSave">新增必考关系</a>
+        </div>
+    </div>
+    <div style="margin-left:20px">
+        <table id="questionTable" class="table_info">
+            <tr>
+                <th width="80" class="text-center">序号</th>
+                <th width="180" class="text-center">试卷名称</th>
+                <th class="text-center">必考对像</th>
+                <th class="text-center">操作</th>
+
+            </tr>
+            <tbody id="Render_List"></tbody>
+        </table>
+        <div></div>
+    </div>
+</div>
+
+<script id="questions" type="text/html">
+    {{# if (d.data!=null){ }}
+    {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
+    <tr>
+        <td>{{d.data[i].examId}}</td>
+        <td>
+            {{# if(d.data[i].type==0){ }}部门 {{# } }}
+            {{# if(d.data[i].type==1){ }}岗位 {{# } }}
+            {{# if(d.data[i].type==2){ }}班级 {{# } }}
+            {{# if(d.data[i].type==3){ }}人员 {{# } }}
+
+        </td>
+        <td>{{d.data[i].bizName}}</td>
+        <td>
+            <a id="deleteExamPaper" class="deleteExamPaper" href="#" title="{{d.data[i].bizId}},{{d.data[i].type}}">删除</a>
+        </td>
+    </tr>
+    {{# } }}
+    
+
+    {{# }}}
+</script> 
+<script src="~/Areas/Admin/Views/ExamManage/SetRelation.js"></script>

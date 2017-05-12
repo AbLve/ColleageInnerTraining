@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ColleageInnerTraining.Application.Dtos.UserAccountListDto>
+<table class="table_info">
+    <tr>
+        <th class="col-xs-2">名称</th>
+        <th class="col-xs-2">部门</th>
+        <th class="col-xs-2">岗位</th>
+        <th class="col-xs-2">地区</th>
+        <th class="col-xs-2">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.LoginName</td>
+            <td>@item.DepartmentName</td>
+            <td>@item.PostName</td>
+            <td>@(item.province + item.City + item.Area + item.DetailedAddress)</td>
+            <td>
+                <a class="yanhse" href="/Admin/AccountUser/UpdateAccountUser?Id=@item.Id">编辑</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}

@@ -1,0 +1,42 @@
+﻿@model ColleageInnerTraining.Web.Models.Strudents.StudentViewModel
+@{
+ Layout= "~/Views/Shared/_PageLayout.cshtml";
+}
+<script>
+    
+
+    $(function() {
+
+        $("#userBirthDate").prop("readonly", true).datepicker({
+        changeMonth: true,
+        dateFormat: "yy-mm-dd",
+        onClose: function (selectedDate) {
+
+        }
+
+    });
+    });
+
+</script>
+        
+
+<h2>添加Student信息</h2>
+<form  class="form-horizontal" action="~/Student/Save" method="POST">
+    @Html.AntiForgeryToken()
+    <table class="tab-content">
+        <tr>
+            <td>姓名：</td>
+            <td><input type="text" class="form-control" id="userName" name="Name"  value="@Model.Name"  placeholder="@L("Name")" required></td>
+        </tr>
+        <tr>
+            <td>年龄：</td>
+            <td><input type="text" class="form-control" id="userBirthDate" name="BirthDate" value="@Model.BirthDate" placeholder="@L("BirthDate")" required></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="hidden" class="form-control" name="Id" value="@Model.Id" placeholder="@L("Id")" required>
+                <button type="submit" id="RegisterButton" class="btn btn-primary"><i class="fa fa-sign-in"></i> @L("Save")</button></td>
+        </tr>
+    </table>
+</form>

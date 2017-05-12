@@ -1,0 +1,44 @@
+﻿@{
+    var list = new List<SelectListItem>{
+                                      new SelectListItem { Text = "考试", Value = "2" },
+                                      new SelectListItem { Text = "问卷", Value = "3"},
+                                     };
+}
+<div class="Container w">
+    <div class="side_menu fl">
+        <h3 class="f14 c66">班级项目</h3>
+        <div class="side_nav">
+            <a class="cur">班级项目管理</a>
+        </div>
+    </div>
+    <div class="content fr">
+        <div class="rightTop">
+            <p><label style="color:blue">@(Request["cName"])</label>项目信息</p>
+            <ul class="subnav">
+                <li>
+                    <a href="javascript:" onclick="location.href = '/Admin/Classes/ClassesProjectForm?cNmae=' + $('#cname').val() + '&cId=' + $('#cid').val()" class="btn btn_yanhse fl mf30">新增项目</a>
+                </li>
+                <li>
+                    <a class="btn btn_yanhse" href="/Admin/Classes/ClassesManageIndex">返回</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="title_btn fl w100">
+            <div class="fl">
+                <input type="hidden" id="cid" value="@Request["cId"]" />
+                <input type="hidden" id="cname" value="@Request["cName"]" />
+                <label class="fl f14 l28">项目名称：</label>
+                <input type="text" class="form-control w160 fl" id="search" />
+                <label class="fl f14 l28 mf30">项目类型：</label>
+                @Html.DropDownList("ClassProType", list, "请选择", new { @class = "form-control w160 fl", @onchange = "change()" })
+                <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+            </div>
+        </div>
+        <div id="dataListDiv">
+            @Html.Action("GetProjectDataList")
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/Classes/ClassesProject/index.js?t=@DateTime.Now"></script>

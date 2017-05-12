@@ -1,0 +1,8 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Data; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Data;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+

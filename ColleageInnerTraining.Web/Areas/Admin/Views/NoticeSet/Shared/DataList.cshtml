@@ -1,0 +1,25 @@
+﻿@model List<ColleageInnerTraining.Application.Dtos.NoticeDepJobListDto>
+@using ColleageInnerTraining.Common
+<table class="table_info">
+    <tr>
+        <th class="col-xs-3 text-center">知识点</th>
+        <th class="col-xs-3 text-center">类型</th>
+        <th class="col-xs-3 text-center">名称</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="td_p_l_5">@item.NoticeTitle</td>
+            <td>@(item.type == 0 ? "部门" : "岗位")</td>
+            <td>@item.BusinessName</td>
+            <td>
+                <a class="lanse" onclick="remove(@item.Id)">移除</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}
+
+
+

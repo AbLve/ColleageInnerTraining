@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ColleageInnerTraining.Application.Dtos.TeachersListDto>
+@using ColleageInnerTraining.Common;
+<table class="table_info">
+    <tr>
+        <th class="col-xs-2 text-center">名称</th>
+        <th class="col-xs-1 text-center">部门</th>
+        <th class="col-xs-2 text-center">培训课程数</th>
+        <th class="col-xs-2 text-center">主讲课程</th>
+        <th class="col-xs-1 text-center">角色</th>
+        <th class="col-xs-1 text-center">状态</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.UserName</td>
+            <td>@item.DepartmentName</td>
+            <td>@item.TrainCount</td>
+            <td>@item.SpeakerCourse</td>
+            <td>@EnumDescription.GetFieldText((TeacherRolu)item.Role)</td>
+            <td>@EnumDescription.GetFieldText((TeacherStatus)item.Status)</td>
+            <td>
+                <a class="lanse" href="/Admin/TeacherUser/SeeCourse?sysNo=@item.SysNo">查看课程</a> |
+                <a class="lanse" onclick="CheckCourse('@item.Id','1','@item.Status')">审核通过</a> |
+                <a class="lanse" onclick="CheckCourse('@item.Id','0','@item.Status')">审核不通过</a> |
+                <a class="lanse" href="/Admin/TeacherUser/EditTeacher?id=@item.Id">编辑</a> |
+                <a class="lanse" onclick="javascript:return confirm('确认删除！')" href="/Admin/TeacherUser/DeleteById?id=@item.Id">删除</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}

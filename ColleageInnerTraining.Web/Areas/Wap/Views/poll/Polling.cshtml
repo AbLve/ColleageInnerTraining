@@ -1,0 +1,108 @@
+﻿@using System.Threading
+@using System.Web.Optimization
+@using Abp.Timing
+@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Bundling
+@model ColleageInnerTraining.Web.Areas.Wap.Models.PollViewModel
+@{
+    SetAntiForgeryCookie();
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>问卷调查</title>
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="pragram" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0; minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    @Styles.Render("~/Bundles/Wap/css")
+    @Scripts.Render("~/Bundles/Wap/libs/js")
+    @Scripts.Render("~/Bundles/Wap/js")
+    <script type="text/javascript">
+        @* This is used to get the application's root path from javascript.
+        It's useful if you're running application in a virtual directory under IIS. *@
+        var abp = abp || {}; abp.appPath = '@ApplicationPath';
+    </script>
+    <script type="text/javascript">
+        var pollId = @Model.PollId; 
+    </script>
+</head>
+<body>
+    <div class="Amain">
+        <div class="wpd94 exam_header overhide">
+            <input type="hidden" id="recordId">
+
+            <!--问卷头部 -->
+            <span id="pollName" class="fl c33"></span> <a href="javascript:;" id="submit" class="fr btn btn_yanse cff">提交问卷</a>
+        </div>
+        <!--试题-->
+        <div id="questionPoll" class="w exam_con">
+
+        </div>
+
+        <div class="h100"></div>
+        <div class="h100"></div>
+        <div class="exam-opbg hide"></div>
+        <div class="exam-footer">
+            <!--问卷尾部-->
+            <div id="examFooter" class="exam_fix">
+
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script id="questions" type="text/html">
+    {{# var qNum = 1;}}
+    {{# for(var i = 0, jlen = d.recordItemList.length; i < jlen; i++){ }}
+    {{#var section = d.recordItemList[i];}}
+    <div class="exam_section question_section ">
+        <!--填空题-->
+        {{# if(section.questionType == 2){  }}
+        <h1>第{{qNum++}}题：{{section.wapBlankContent}}</h1>
+        {{# }else{ }}
+        <h1>第{{qNum++}}题：{{section.content}}</h1>
+        {{# } }}
+        <!--填空题-->
+        <!--单选题-->
+        {{# if(section.questionType == 0){  }}
+            {{#var options = section.optionList;}}
+            {{# for(var j = 0, oplen = options.length; j < oplen; j++){ }}
+                {{# var option = options[j]; }}
+                {{# var questionType = 'SINGLE';}}
+                {{# var checked = '';}}
+                {{# if(option.identifier == section.answer) {checked = 'checked';}}}
+                    <div class="qu_radio"><input type="radio" {{checked}} name="{{section.id}}"  data-type="{{questionType}}" data-ident="{{option.identifier}}" /> {{option.identifier}}. {{option.content}}</div>
+           {{# } }}
+        {{# } }}
+        <!--单选题-->
+        <!--多选题-->
+        {{# if(section.questionType == 1){  }}
+            {{#var options = section.optionList;}}
+            {{# for(var j = 0, oplen = options.length; j < oplen; j++){ }}
+                {{# var option = options[j]; }}
+                {{# var questionType = 'MULTI';}}
+                {{# var checked = 'checked', answer=''; if(section.answer){ answer = section.answer;} }}
+                {{# if(answer.indexOf(option.identifier) == -1){ checked = ''} }}
+                <div class="qu_radio"><input type="checkbox" {{checked}} name="{{section.id}}"  data-type="{{questionType}}" data-ident="{{option.identifier}}" /> {{option.identifier}}. {{option.content}}</div>
+            {{# } }}
+        {{# } }}
+        <!--多选题-->
+
+        {{# if(section.questionType == 3){  }}
+            {{# var questionType = 'ESSAY';}}
+            {{# var answer=''; if(section.answer){ answer = section.answer;} }}
+            <textarea class="exam_textarea" data-type="{{questionType}}" name="{{section.id}}">{{answer}}</textarea>
+        {{# } }}
+    </div>
+    {{# } }}
+
+</script>
+
+<script src="~/Areas/Wap/Views/Poll/Polling.js?v=1.0"></script>

@@ -1,0 +1,26 @@
+﻿@using ColleageInnerTraining.Web.Navigation
+
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Teacher;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Teacher;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+
+<div class="Container w">
+    <div class="content fr">
+        <div class="rightTop">
+            <p>课程查看</p>
+            <ul class="subnav">
+                <li>
+                    <a class="btn btn_yanhse" href="/Admin/TeacherUser/Index">返回</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="dataListDiv">
+            @Html.Action("GetTeacherByCourseList")
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/Course/Index.js"></script>

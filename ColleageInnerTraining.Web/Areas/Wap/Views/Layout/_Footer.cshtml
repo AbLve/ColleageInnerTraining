@@ -1,0 +1,39 @@
+﻿@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Wap.Models.FooterViewModel
+
+@if (Model.CurrentPageName != PageNames.Wap.CourseDetail)
+{
+<div class="h60"></div>
+<div class="Index_footer">
+    <ul>
+        <li> <a href="@(PageNames.WapUrl.Home)"> <img src="~/images/wapimgs/footnav1@(Model.CurrentPageName.Contains(PageNames.Wap.Home) ? "hover" : "").png" /> 首页 </a> </li>
+        <li> <a href="@(PageNames.WapUrl.Course)"> <img src="~/images/wapimgs/footnav2@(Model.CurrentPageName.Contains(PageNames.Wap.Course) ? "hover" : "").png" /> 课程中心 </a> </li>
+        <li> <a href="#@(PageNames.WapUrl.Interactive)"> <img src="~/images/wapimgs/footnav3@(Model.CurrentPageName.Contains(PageNames.Wap.Interactive) ? "hover" : "").png" /> 互动社区 </a> </li>
+        <li> <a href="@(PageNames.WapUrl.Exam)"> <img src="~/images/wapimgs/footnav4@(Model.CurrentPageName.Contains(PageNames.Wap.Exam) ? "hover" : "").png" /> 考试中心 </a> </li>
+        <li> <a href="@(PageNames.WapUrl.Member)"> <img src="~/images/wapimgs/footnav5@(Model.CurrentPageName.Contains(PageNames.Wap.Member) ? "hover" : "").png" /> 会员中心 </a> </li>
+    </ul>
+</div>
+}
+else
+{
+    <div class="h25"></div>
+    <div class="h25"></div>
+    <div class="lesson_footer overhide bgbai">
+        <div class="col-xs-4">
+            <a href="#" class="addCollection">
+                <img src="~/images/wapimgs/favatior.png" />
+                <span class="c99 collectionTxt" style="display:block;">收藏</span>
+            </a>
+        </div>
+        <div class="col-xs-4">
+            <a>
+                <img src="~/images/wapimgs/xiangqing.png" />
+                <span class="c99">培训详情</span>
+            </a>
+        </div>
+
+        <div class="col-xs-4">            
+            <a class="w fl bgyanse cff f15 singleUpCourse">报名</a>
+        </div>
+    </div>
+}

@@ -1,0 +1,66 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.ExamViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.ExamPaper; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Exam;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<script type="text/javascript">
+
+    var paperId = @Model.PaperId;
+
+</script>
+
+
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <ul>
+            <li style="display:none" id="uploadQuestion">
+                <input id="imageFile" type="file" class="btn btn_yanhse mr45 fl" title="上传试题" value="上传试题" />
+            </li>
+        </ul>
+    </div>    
+
+    <div class="title_btn fl w100 mt20" id="">
+        <div class="fl">
+            <label id="checkMessageLable" style="display:none" class="fl f14 l28 mf30">审核信息：</label><input id="checkMessage"  style="display:none" type="text" class="form-control w160 fl">
+            <button type="button" id="formApproe" style="display:none" class="btn btn_yanhse fl mf30">审核通过</button>
+            <button type="button" id="formBack" style="display:none" class="btn btn_yanhse mf50 fl">审核不通过</button>
+            <label class="fl f14 l28 mf30">试卷名称：</label><label id="paperName" class="fl f14 l28 mf30"></label>
+            <input id="templeDown" type="button" class="btn btn_yanhse fl mf30" title="下载模板" value="下载模板" />
+        </div>
+    </div>
+    <div style="margin-left:20px">
+        <table id="questionTable" class="table_info">
+            <tr>
+                <th width="80" style="text-align:center">序号</th>
+                <th>题干</th>
+                <th class="text-center">分值</th>
+                <th class="text-center">题型</th>
+                <th class="text-center">难度</th> 
+                <th class="text-center">序号</th>
+            </tr>
+            <tbody id="Render_List"></tbody>
+        </table>
+        <div></div>
+    </div>
+
+    <script id="questions" type="text/html">
+        {{# if (d.paperQuestions!=null){ }}
+        {{# for(var i = 0, len = d.paperQuestions.length; i < len; i++){ }}
+        <tr>
+            <td>{{d.paperQuestions[i].questionId}}</td>
+            <td class="text-left">{{d.paperQuestions[i].content}}</td>
+            <td class="text-center">{{d.paperQuestions[i].score}}</td>
+            <td class="text-center">{{d.paperQuestions[i].typeName}}</td>
+            <td class="text-center">{{d.paperQuestions[i].levelName}}</td> 
+            <td class="text-center">{{d.paperQuestions[i].sort}}</td> 
+        </tr>
+        {{# } }}
+
+        {{# }}}
+    </script>
+</div>
+ 
+<script src="~/Areas/Admin/Views/ExamPaper/QuestionExamPaper.js"></script>

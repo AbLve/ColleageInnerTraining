@@ -1,0 +1,96 @@
+﻿
+@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.ExamViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.ExamManage; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Exam;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<script type="text/javascript">
+
+    var examId = @Model.ExamId;
+
+</script>
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <div class="fl">
+            <a class="btn btn_yanhse fl mf30" href="EditExam?examId=@Model.ExamId">编辑考试</a>
+            <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+        </div>
+    </div>
+
+
+    <form>
+        <ul class="content_form">
+
+            <li>
+                <label>考试名称：</label>
+                <input id="examName" name="examName" type="text" placeholder="考试名称" class="form-control w400 fl">
+            </li>
+            <li>
+                <label>	开始时间：</label>
+                <input id="startTime" name="startTime" type="text" placeholder="开始时间" class="form-control w400 fl">
+            </li>
+            <li>
+                <label>	结束时间：</label>
+                <input id="endTime" name="endTime" type="text" placeholder="结束时间"  class="form-control w400 fl">
+            </li>
+            <li>
+                <label>	时间是否不限：</label>
+                <input id="timeUnlimited" name="timeUnlimited" type="checkbox" class="checkbox">
+            </li>
+
+            <li>
+                <label>	时长：</label>
+                <input id="duration" name="duration" type="text" placeholder="分钟" class="form-control w400 fl">
+            </li>
+            <li>
+                <label>	时长是否不限：</label>
+                <input id="durationUnlimited" name="durationUnlimited" type="checkbox" class="checkbox">
+            </li>
+            <li>
+                <label>	可考次数：</label>
+                <input id="number" name="number" placeholder="可考次数"  type="text" class="form-control w400 fl">
+            </li>
+            <li>
+                <label>	可考次数是否不限：</label>
+                <input id="numberUnlimited" name="numberUnlimited" type="checkbox" class="checkbox">
+            </li>
+            <li>
+                <label>	通过分数：</label>
+                <input id="score" name="score" maxlength="3"  placeholder="通过分数" type="text" class="form-control w400 fl">
+            </li>
+            <li>
+                <label>	是否闭卷：</label>
+                <input id="bookClosed" name="bookClosed" type="checkbox" class="checkbox">
+            </li>
+            <li>
+                <label>	试题是否乱序：</label>
+                <input id="qunordered" name="qunordered" type="checkbox" class="checkbox">
+            </li>
+            <li>
+                <label>	选项是否乱序：</label>
+                <input id="ounordered" name="ounordered" type="checkbox" class="checkbox">
+            </li>
+            <li>
+                <label>	成绩发布时是否显示试题解析：</label>
+                <input id="ounordered" name="ounordered" type="checkbox" class="checkbox"> 
+            </li>
+            <li>
+                <label>	ip白名单：</label>
+                <textarea id="ipaddrs" name="ipaddrs"  placeholder="ip白名单" type="text" class="form-control w400 fl"></textarea>
+            </li>
+
+            
+        </ul>
+
+        <div class="clearfix"></div>
+        <div class="h20"></div>
+        <button type="button" id="formSave" class="btn btn_yanhse mf120 fl">保存</button>
+        <button type="button" id="formSubmit" class="btn btn_yanhse mf50 fl" style="display:none">提交考试</button>
+        <button type="button" id="formReset" class="btn btn_yanhse mf50 fl">取消</button>
+    </form>
+</div>
+ 
+<script src="~/Areas/Admin/Views/ExamManage/EditExam.js"></script>

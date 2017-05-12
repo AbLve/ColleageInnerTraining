@@ -1,0 +1,30 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@{
+    //Layout = "";
+    ViewBag.CurrentPageName = PageNames.Managemnet.JobPost;
+    ViewBag.MenuId = PageNames.ManagemnetKey.JobPost;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+    <div class="rightTop">
+        <p>岗位管理</p>
+        <ul class="subnav">
+            <li>
+                <a class="btn btn_yanhse" href="/Admin/System/JobPostCreate">新增</a>
+            </li>
+        </ul>
+    </div>
+    <div class="title_btn fl w100">
+        <div class="fl">
+            <label class="fl f14 l28">岗位名称：</label>
+            <input type="text" id="search" class="form-control w160 fl" />
+            <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+        </div>
+    </div>
+    <div id="dataListDiv">
+        @Html.Action("GetJobPostDataList")
+    </div>
+</div>
+<div class="clearfix"></div>
+<script src="~/Areas/Admin/Views/System/JobPost/index.js"></script>

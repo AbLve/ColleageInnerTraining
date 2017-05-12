@@ -1,0 +1,101 @@
+﻿@using ColleageInnerTraining.Web.Navigation;
+@using ColleageInnerTraining.Common;
+@model ColleageInnerTraining.Application.Dtos.CourseInfoListDto
+@{
+    if (Model.IsTypeC == 1)
+    {
+        ViewBag.CurrentPageName = PageNames.Managemnet.Course;
+        ViewBag.MenuId = PageNames.ManagemnetKey.Course;
+        @Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+    }
+    else
+    {        
+        ViewBag.CurrentPageName = PageNames.Managemnet.CorseCheck;
+        ViewBag.MenuId = PageNames.ManagemnetKey.CorseCheck;
+        @Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+    }
+}
+
+<div class="content fr">
+    <div class="rightTop">
+        <p>课程管理</p>
+        <ul class="subnav">
+            <li>
+                @{
+                    if (Model.IsTypeC == 1)
+                    {
+                        <a class="btn btn_yanhse" href="/Admin/Course/Index">返回</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn_yanhse" href="/Admin/Course/CheckCourse">返回</a>
+                    }
+                }
+                           
+            </li>
+        </ul>
+    </div>
+
+    <div class="h20"></div>
+    <ul class="content_form lesson-form">
+        <li class="col-xs-6">
+            <label>课程类型：</label>
+            <label class="text-left">@(EnumDescription.GetFieldText((CourseType)Model.Type))</label>
+        </li>
+        <li class="col-xs-6">
+            <label>课程名称：</label>
+            <label class="text-left">@Model.CourseName</label>
+        </li>
+         <li class="col-xs-6">
+            <label>内训师：</label>
+            <label class="text-left">@Model.TeacherName</label>
+         </li>
+         <li class="col-xs-6">
+            <label>考试：</label>
+            <label class="text-left" id="ExamName"></label>
+         </li>
+        <li class="col-xs-6">
+            <label>问卷：</label>
+            <label class="text-left"id="PollName"></label>
+        </li>
+        <li class="col-xs-6">
+            <label>开始时间：</label>
+            <label class="text-left">@Model.StartTime</label>
+        </li>
+        <li class="col-xs-6">
+            <label>结束时间：</label>
+            <label class="text-left">@Model.EndTime</label>
+        </li>
+        <li class="col-xs-6">
+            <label>课程时长：</label>
+            <label class="text-left">@Model.TimeLength</label>
+        </li>
+        <li class="col-xs-6">
+            <label>培训地点：</label>
+            <label class="text-left">@Model.TrainingLocation</label>
+        </li>
+        <li class="col-xs-6">
+            <label>课程展示端：</label>
+            <label class="text-left">@(EnumDescription.GetFieldText((Display)Model.DisplayPosition))</label>
+        </li>
+        <li class="col-xs-12">
+            <label>图片：</label>
+            <img width="150" height="150" id="imghead" />
+        </li>
+        <li class="col-xs-12">
+            <label>课程简介：</label>
+            <label class="text-left col-xs-8">@Model.Description</label>
+        </li>
+        <li class="col-xs-12">
+            <label>详细内容：</label>
+            <label class="text-left col-xs-8" id="ContentText"></label>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    ExamId = @Model.ExaminationId;
+    PollId = @Model.PollId;
+    imgUrl = '@Model.ImageUrl';
+    Content = '@Model.Content';
+</script>
+<script src="~/Areas/Admin/Views/Course/CourseDetail.js?v=@DateTime.Now"></script>

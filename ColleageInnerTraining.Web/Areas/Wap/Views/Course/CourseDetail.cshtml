@@ -1,0 +1,85 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@using ColleageInnerTraining.Common
+@model ColleageInnerTraining.Web.Areas.Wap.Models.CourseViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Wap.CourseDetail; //页面路径
+}
+<script>
+    var courseId = @Model.CourseId;
+    var examId = @Model.CourseInfo.ExaminationId;
+    var pollId = @Model.CourseInfo.PollId;
+    var courseName = '@Model.CourseInfo.CourseName';
+    var type ="@(Model.CourseInfo.Type == 4 ? "Train" : "Course")";
+    var IsComplete =  @Model.IsSingleUp.ToString().ToLower();
+    var IsSingleUp = @Model.IsSingleUp.ToString().ToLower();
+</script>
+<div class="w mt10 overhide">
+    <div class="w lesson_view bgbai overhide">
+        <img class="w" src="@Model.CourseInfo.ImageUrl" />
+        <h1 class="c33 col-xs-12">@Model.CourseInfo.CourseName</h1>
+
+        <p class="c99 col-xs-12">
+        @if (Model.CourseInfo.Type != (int)CourseType.Line)
+        {
+        <span>课程：@Model.CourseInfo.TimeLength 分钟  </span>
+        }
+            <span>课程时间：@Model.CourseInfo.StartTime.ToString("yyyy-MM-dd")</span><span>课程类目：@Model.CourseInfo.CourseCategoryName</span></p>
+        <p class="c99 col-xs-12"><span>报名人数：@Model.CourseInfo.Enrollment 人</span><span>收藏人数：@Model.CourseInfo.CollectionTimes 次</span><span>阅读人数：@Model.CourseInfo.ReadTimes 人</span></p>
+    </div>
+    <div class="col-xs-12 teacher_intro bgbai overhide">
+        <h1 class="c33">老师介绍</h1>
+        <div class="teacher-kuang">
+            <div class="teacher_info overhide">
+                <img class="fl" src="@Model.teacher.PortraitUrl" />
+                <div>
+                    <h2 class="c33">@Model.teacher.UserName</h2>
+                    <!--<p class="c99">好评度：100%</p>-->
+                    <p class="c99">课程数：@Model.teacher.TrainCount</p>
+                </div>
+            </div>
+            <p class="c66 ml10 col-xs-11">
+               @Model.teacher.SpeakerCourse
+            </p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    @if (Model.IsSingleUp)
+    {
+    <div class="col-xs-12 teacher_intro bgbai overhide" id="examArea" style="display:none">
+        <h1 class="c33">课程考试信息</h1>
+        <p class="c33">考试名称：<span id="examName"></span></p>
+        <p class="c33">考试时间：<span id="examDateTime"></span></p>
+        <p class="c33">考试时长：<span id="examTime"></span>分钟</p>
+        <a href="/Wap/Exam/Examing?examId=@Model.CourseInfo.ExaminationId" class="btn btn_yanse cff exam_btn">考试</a>
+    </div>
+    }
+    <div class="col-xs-12 teacher_intro bgbai overhide" id="pollArea"  style="display:none">
+        <h1 class="c33">课程问卷信息</h1>
+        <p class="c33">问卷名称：<span id="pollName"></span></p>
+        <a href="/Wap/Poll/Polling?pollId=@Model.CourseInfo.PollId" class="btn btn_yanse cff exam_btn">填写问卷</a>
+    </div>
+
+    <div class="w teacher_intro bgbai overhide pdbottom">
+        <h1 class="c33 col-xs-12">课程详情</h1>
+        <div class="w lalala">
+            <a class="teacher_btn cur">课程详情<i></i></a>
+            <a class="teacher_btn">评价<i></i></a>
+        </div>
+        <div class="comment_con w">
+            <div class="col-xs-12 comment_main">
+                @Html.Raw(Model.CourseInfo.Content)
+            </div>
+        </div>
+        <div class="comment_con w" style="display: none;">
+            <div class="comment_header col-xs-12">
+                <span class="fl yanhse">评分：5分</span>
+                <div class="fr"><i></i><a class="btn c33">我要评价</a></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/Areas/Wap/Views/Course/CourseDetail.js?v=1.0"></script>

@@ -1,0 +1,77 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.ExamViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.ExamManage; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Exam;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<script type="text/javascript">
+
+    var examId = @Model.ExamId;
+
+</script>
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <div class="fl">
+            <a class="btn btn_yanhse fl mf30" href="PaperManage?examId=@Model.ExamId">配置试卷</a>
+            <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+        </div>
+    </div>
+    <div class="title_btn fl w100 mt20">
+        <label class="fl f14 l28 mf30">考试名称：</label>
+        <label id="examName" class="fl f14 l28 mf30"></label>
+        <label class="fl f14 l28 mf30">试卷名称：</label>
+        <select id="paperId" class="fl f14 l28 mf30"></select>       
+        <div class="fl">
+            <a class="btn btn_yanhse fl mf30" id="formSave">新增试卷</a>
+        </div>
+    </div>
+    <div style="margin-left:20px">
+        <table id="questionTable" class="table_info">
+            <tr>
+                <th width="80" class="text-center">序号</th>
+                <th width="180" class="text-center">试卷名称</th>
+                <th class="text-center">是否有效</th>
+                <th class="text-center">操作</th>
+
+            </tr>
+            <tbody id="Render_List"></tbody>
+        </table>
+        <div></div>
+    </div>
+</div>
+
+<script id="questions" type="text/html">
+    {{# if (d.papers!=null){ }}
+    {{# for(var i = 0, len = d.papers.length; i < len; i++){ }}
+    <tr>
+        <td>{{d.papers[i].id}}</td>
+        <td>{{d.papers[i].name}}</td>
+        <td>
+            {{# if(d.papers[i].enabled){ }}
+            是
+            {{# } else{ }}
+            否
+            {{# } }}
+        </td>
+        <td> <a id="deleteExamPaper" class="deleteExamPaper" href="#" title="{{d.papers[i].id}}">删除</a>
+        </td>
+    </tr>
+    {{# } }}
+
+
+    {{# }}}
+</script>
+
+
+
+
+<script id="papers" type="text/html">
+    {{# if (d.data!=null){ }}
+    {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
+    <option value="{{d.data[i].id}}">{{d.data[i].name}}</option>
+    {{# } }}
+    {{# }}}
+</script>
+<script src="~/Areas/Admin/Views/ExamManage/PaperManage.js"></script>

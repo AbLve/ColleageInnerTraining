@@ -1,0 +1,14 @@
+﻿<div  style="margin:10px auto; width:310px;" >
+    @if (ViewBag.Stauts == 0)
+    {
+        <img src="~/images/wapimgs/fail.jpg" style="margin:10px auto" width="310" />
+    }
+    else if (ViewBag.Stauts == 1)
+    {
+        <h1 style="text-align:center;color:green">已经签到！</h1>
+    }
+    else
+    {
+        <img src="~/images/wapimgs/success.jpg" style="margin:10px auto" width="310" />
+    }
+</div>     

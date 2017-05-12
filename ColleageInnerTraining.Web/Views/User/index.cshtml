@@ -1,0 +1,48 @@
+﻿@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Models.UserModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.UserPage.Teacher; //The menu item will be active for this page.   
+    ViewBag.MenuId = PageNames.ManagemnetKey.User;
+}
+
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+
+
+
+    <div class="content fr">
+    <div class="title_btn fl w100">
+        <input class="btn btn_yanhse fl mf30" type="submit" value="审核" />
+    </div>
+    <table class="table_info">
+        <tr>
+            <th class="col-xs-1">名称</th>
+            <th class="col-xs-2">部门</th>
+            <th class="col-xs-1">培训课程数</th>
+            <th class="col-xs-2">班级</th>
+            <th class="col-xs-2">主讲课程</th>
+            <th class="col-xs-1">角色</th>
+            <th class="col-xs-1">状态</th>
+            <th class="col-xs-2">操作</th>
+        </tr>
+        <tr>
+            <td>名称</td>
+            <td>设计</td>
+            <td>5</td>
+            <td>班级数量</td>
+            <td>设计</td>
+            <td>外聘师</td>
+            <td>开启</td>
+            <td><a class="yanhse" href="">编辑</a>　/　<a class="lanse">删除</a></td>
+        </tr>
+    </table>
+    <div class="page-foot">
+        <p>
+            <a href=""><span class="prev">上一页</span></a>
+            <a href=""><span class="active">1</span></a>
+            <a href=""><span>2</span></a>
+            <a href=""><span>3</span></a>
+            <a href=""><span class="prev">下一页</span></a>
+        </p>
+    </div>
+</div>
+<div class="clearfix"></div>

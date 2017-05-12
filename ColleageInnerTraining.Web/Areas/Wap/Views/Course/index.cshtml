@@ -1,0 +1,105 @@
+﻿
+<div class="lesson_head">
+    <div class="px-btn w">
+        <div class="lesson-bg w"></div>
+        <div class="lesson_tab col-xs-4">
+            <a class="text-center c33 lesson_a">综合排序 <i></i></a>
+            <em></em>
+            <div class="lesson_all w lesson_classily">
+                <div class="w bgbai">
+                    <a class="sortNav cur" name="CreationTime">综合排序</a>
+                    <a class="sortNav" name="ReadTimes">人气排序</a>
+                    <a class="sortNav" name="CreationTime">时间排序</a>
+                </div>
+            </div>
+        </div>
+        <div class="lesson_tab col-xs-3">
+            <a class="text-center c33 lesson_a">类目 <i></i></a>
+            <em></em>
+            <div class="lesson_category w lesson_classily">
+                <div class="w bgbai">
+                    <ul class="lesson_category_ul">
+                        <li class="cur">
+                            <a class="categoryNav">
+                                <i class="icon A_em1"></i>
+                                全部
+                            </a>
+                        </li>
+                        @for (int i = 0; i < Model.CourseCategorys.Count; i++)
+                        {
+                            var category = Model.CourseCategorys[i];
+
+                            <li>
+                                <a class="categoryNav" name="@category.Path">
+                                    <i class="icon A_em2"></i>
+                                    @category.CourseCategoryName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <div class="lesson_classily_con">
+                        <a class="categoryNav" name="0">
+                            全部
+                        </a>
+                        @for (int i = 0; i < Model.CourseCategorys.Count; i++)
+                        {
+                            var category = Model.CourseCategorys[i];
+
+                            <li>
+                                <a class="categoryNav" name="@category.Path">
+                                    <i class="icon A_em2"></i>
+                                    @category.CourseCategoryName
+                                </a>
+                            </li>
+                        }
+                    </div>
+        
+
+                    @for (int i = 0; i < Model.CourseCategorys.Count; i++)
+                    {
+                        var category = Model.CourseCategorys[i];
+                        var childrenCategorys = @category.CourseCategorys;
+                        <div class="lesson_classily_con" style="display: none;">
+                            @for (int j = 0; j < childrenCategorys.Count; j++)
+                            {
+                                var childrenCategory = childrenCategorys[j];
+                                <a class="categoryNav" name="@childrenCategory.Path">
+                                    @childrenCategory.CourseCategoryName
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="lesson_tab col-xs-3">
+            <a class="text-center c33 lesson_a">筛选 <i></i></a>
+            <em></em>
+            <div class="lesson_screen w lesson_classily">
+                <div class="col-xs-12 bgbai lesson_screen_con">
+                    <div class="lesson_screen_top">
+                        <a class="typeNav" name="1">系列课程</a>
+                        <a class="typeNav" name="2">点播课程</a>
+                        <a class="typeNav" name="3">直播课程</a>
+                        <a class="typeNav" name="4">线下培训</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lesson_tab col-xs-2 lesson_nav">
+            <a class="text-center c33 lesson_a"> <img src="~/images/wapimgs/navgation.png" /> </a>
+            <em></em>
+            <div class="lesson_navgation w lesson_classily">
+                <div class="col-xs-6 bghui fr">
+                </div>
+                <div class="col-xs-6 fl lesson-cc"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w overhide content ">
+    <div class="lists"></div>
+</div>
+<div class="h20"></div>
+<script src="~/Areas/Wap/Views/Course/index.js"></script>

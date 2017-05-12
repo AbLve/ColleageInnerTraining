@@ -1,0 +1,26 @@
+﻿@model List<ColleageInnerTraining.Application.Dtos.KonwledgeInfoListDto>
+<table class="table_info">
+    <tr>
+        <th class="col-xs-3 text-center">标题</th>
+        <th class="col-xs-1 text-center">发布者</th>
+        <th class="col-xs-2 text-center">审核时间</th>
+        <th class="col-xs-1 text-center">审核人</th>
+        <th class="col-xs-1 text-center">状态</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="td_p_l_5">@item.Title</td>
+            <td>@item.CreatorUserName</td>
+            <td>@(item.ReviewedDate == null ? "" : item.ReviewedDate.Value.ToString("yyyy-MM-dd"))</td>
+            <td>@item.AuditorName</td>
+            <td>@(item.Stauts == 1 ? "通过" : item.Stauts == 2 ? "未通过" : "待审核") </td>
+            <td>
+                <a class="yanhse" onclick="audited(@item.Id,1)" href="javascript:">通过</a> |
+                <a class="yanhse" onclick="audited(@item.Id,2)" href="javascript:">不通过</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}

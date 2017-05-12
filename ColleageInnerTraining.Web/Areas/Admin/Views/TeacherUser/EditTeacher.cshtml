@@ -1,0 +1,91 @@
+﻿@using Abp.Web.Mvc.Extensions;
+@using ColleageInnerTraining.Web.Navigation;
+@using ColleageInnerTraining.Common.Utils;
+@using ColleageInnerTraining.Common;
+@using ColleageInnerTraining.Application.Dtos
+@model ColleageInnerTraining.Application.Dtos.TeachersEditDto
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Teacher;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Teacher;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+
+<div class="Container w">
+    <div class="rightTop">
+        <p>内训师管理</p>
+        <ul class="subnav">
+            <li>
+                <a class="btn btn_yanhse" href="/Admin/TeacherUser/Index">返回</a>
+            </li>
+        </ul>
+    </div>
+    <div class="h20"></div>
+    <div class="content fr">
+        @using (Html.BeginForm("Save", "TeacherUser", FormMethod.Post, new { id = "fmTeacher", enctype = "multipart/form-data", role = "form" }))
+        {
+            <div class="hidden">
+                @Html.HiddenFor(t => t.Id)
+                @Html.HiddenFor(t => t.SysNo)
+                @Html.HiddenFor(t => t.PortraitUrl)
+                @Html.HiddenFor(t => t.Status)
+            </div>
+            @Html.AntiForgeryToken();
+
+            <ul class="content_form">
+                <li>
+                    <label>名称：</label>
+                    @Html.TextBoxFor(t => t.UserName, new { @class = "form-control", @required = "required" })
+                </li>
+                <li>
+                    <label>手机号：</label>
+                    @Html.TextBoxFor(t => t.UserPhone, new { @class = "form-control", @required = "required" })
+                </li>
+                <li>
+                    <label>邮箱：</label>
+                    @Html.TextBoxFor(t => t.UserEmail, new { @class = "form-control", @required = "required" })
+                </li>
+                <li>
+                    <label>主讲课程：</label>
+                    @Html.TextBoxFor(t => t.SpeakerCourse, new { @class = "form-control", @required = "required" })
+                </li>
+                <li>
+                    <label>部门：</label>
+                    @Html.DropDownListFor(t => t.DepartmentId, new List<SelectListItem>(), ("请选择"), new { @class = "form-control short" })
+                </li>
+                <li>
+                    <label>岗位：</label>
+                    @Html.DropDownListFor(t => t.JobpostId, ViewBag.JobPostData as IEnumerable<SelectListItem>, ("请选择"), new { @class = "form-control short" })
+                </li>
+                <li>
+                    <label>角色：</label>
+                    @Html.DropDownListFor(t => t.Role, UiKit.PopulateDropdown<TeacherRolu>(""), new { @class = "form-control short" })
+                </li>
+                <li>
+                    <label>头像：</label>
+                    <div class="fl uploadfile mb50">
+                        <div id="preview">
+                            <img class="imghead" id="imghead" width=100% height=auto border=0>
+                        </div>
+                        <input type="file" id="uploadify_Head" /><br /> <br />
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+                <li>
+                    <label>　</label>
+                    <input type="submit" id="subTeacher" class="btn btn_yanhse fl mf50" value="提交" />
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+    var PUrl = '@Model.PortraitUrl';
+    $("#Jobpost_Id").val(@Model.JobpostId);
+    $("#Role").val(@Model.Role);
+    $("#DepartmentId").bindSelect({
+        url: "GetTreeDepartSelectJson"
+    });
+    $("#DepartmentId").val(@Model.DepartmentId);
+</script>
+<script src="~/Areas/Admin/Views/TeacherUser/EditTeacher.js?t=@DateTime.Now"></script>

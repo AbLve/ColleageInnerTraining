@@ -1,0 +1,28 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.DepartMent; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.DepartMent;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+    <div class="col-lg-6">
+        <ul id="departTree" class="ztree"></ul>
+        <ul>
+            <li><input id="addParent" type="button" class="btn btn_yanhse fl" title="新增父节点" value="新增父节点" />  
+            <input id="savedepartTree" type="button" class="btn btn_yanhse fl mf120" value="保存" title="保存" /></li>
+        </ul>
+    </div>
+   
+</div>
+<div class="clearfix"></div>
+<style type="text/css">
+    .ztree li span.button.add {
+        margin-left: 2px;
+        margin-right: -1px;
+        background-position: -144px 0;
+        vertical-align: top;
+        *vertical-align: middle;
+    }
+</style>
+<script src="~/Areas/Admin/Views/System/DepartMent/index.js?v=@DateTime.Now"></script>

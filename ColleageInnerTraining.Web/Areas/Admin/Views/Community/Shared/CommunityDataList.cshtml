@@ -1,0 +1,28 @@
+﻿@model Abp.Application.Services.Dto.PagedResultDto<ColleageInnerTraining.Application.Dtos.CommunityInteractionListDto>
+@using ColleageInnerTraining.Common
+<table class="table_info">
+    <tr>
+        <th class="col-xs-3 text-center">问题</th>
+        <th class="col-xs-2 text-center">发起人</th>
+        <th class="col-xs-1 text-center">参与人数</th>
+        <th class="col-xs-2 text-center">时间</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Content</td>
+            <td>@item.UserName</td>
+            <td>@item.CountUser</td>
+            <td>@item.PublicationTime</td>
+            <td>
+                <a class="lanse" href="/Admin/Community/Detail?id=@item.Id">查看回复</a> | 
+                <a class="yanhse" href="/Admin/Community/DeleteById?id=@item.Id">删除</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}
+
+
+

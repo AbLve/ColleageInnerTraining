@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "登录";
+}
+
+<h2>Login</h2>
+
+<form method="post" action="~/Account/Login">
+    @Html.AntiForgeryToken()
+
+    <input id="username" name="username" />
+    <input id="password" name="password"/>
+
+    <button type="submit">Login</button>
+</form>
+

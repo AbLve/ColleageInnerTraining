@@ -1,0 +1,43 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@using ColleageInnerTraining.Common;
+@using ColleageInnerTraining.Common.Utils;
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Community;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Community;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+
+<div class="Container w">
+    <div class="content fr">
+        <div class="rightTop">
+            <p>互动管理详细</p>
+            <ul class="subnav">
+                <li>
+                    <a class="btn btn_yanhse" href="/Admin/Community/Index">返回</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="title_btn fl w100">
+            <div class="fl">
+                <label class="fl f14 l28 mf30">发起人：</label>
+                <input id="txtName" type="text" class="form-control w160 fl" />
+                <label class="fl f14 l28 mf30">问题：</label>
+                <input id="txtquestion" type="text" class="form-control w160 fl" />
+                <label class="fl f14 l28 mf30">时间：</label>
+                <input type="text" id="txtBTime" class="form-control w160 fl input-wdatepicker" onfocus="WdatePicker()" placeholder="开始时间" />
+                <input type="text" id="txtETime" class="form-control w160 fl input-wdatepicker" onfocus="WdatePicker()" placeholder="结束时间" />
+
+                <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+            </div>
+        </div>
+
+
+        <div id="dataListDiv">
+            @Html.Action("GetCommunityChDataList")
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/Community/Detail.js"></script>

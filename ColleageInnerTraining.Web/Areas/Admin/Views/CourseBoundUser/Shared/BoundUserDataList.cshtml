@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ColleageInnerTraining.Application.Dtos.UserAccountListDto>
+<table class="table_info">
+    <tr>
+        <th class="col-xs-1 text-center">@Html.CheckBox("cball", false, new { @onclick = "commonJs.cball(this)" })</th>
+        <th class="col-xs-2 text-center">姓名</th>
+        <th class="col-xs-2 text-center">部门</th>
+        <th class="col-xs-2 text-center">岗位</th>
+        @*<th class="col-xs-2 text-center">是否必学</th>*@
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@Html.CheckBox("cbsingle")</td>
+            <td class="hidden">@item.Id</td>
+            <td>@item.DisplayName</td>
+            <td>@item.DepartmentName</td>
+            <td>@item.PostName</td>
+            @*<td>@Html.CheckBox("clearn")</td>*@
+            <td class="text-center">
+                @if (item.IsExitCourse)
+                {
+                    <a class="yanhse" onclick="remove('@item.Id')">为课程移除人员</a>
+                }
+                else
+                {
+                    <a class="yanhse" onclick="set('@item.Id')">为课程设置人员</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}
+<script type="text/javascript">
+
+</script>

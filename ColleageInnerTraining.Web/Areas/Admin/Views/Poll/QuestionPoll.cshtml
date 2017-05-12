@@ -1,0 +1,81 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.PollViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Poll; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Poll;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<script type="text/javascript">
+
+    var pollId = @Model.PollId;
+
+</script>
+
+
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <ul>
+            <li  id="uploadQuestion">
+                <input id="imageFile" type="file" class="btn btn_yanhse mr45 fl" title="上传问题" value="上传问题" />
+            </li>
+        </ul>
+    </div>
+
+    <div class="title_btn fl w100 mt20" id="">
+        <div class="fl">
+            <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+
+            <label class="fl f14 l28 mf30">问卷名称：</label><label id="pollName" class="fl f14 l28 mf30"></label>
+            <input id="templeDown" type="button" class="btn btn_yanhse fl mf30" title="下载模板" value="下载模板" />
+        </div>
+    </div>
+    <div style="margin-left:20px">
+        <table id="questionTable" class="table_info">
+            <tr>
+                <th width="80" style="text-align:center">序号</th>
+                <th class="text-center" width="400">问卷内容</th>
+                <th class="text-center">状态</th>
+                <th class="text-center">题型</th>
+                <th class="text-center" width="250">选项</th>
+            </tr>
+            <tbody id="Render_List"></tbody>
+        </table>
+        <div></div>
+    </div>
+
+    <script id="questions" type="text/html">
+        {{# if (d.pollQuestionList!=null){ }}
+        {{# for(var i = 0, len = d.pollQuestionList.length; i < len; i++){ }}
+        <tr>
+            <td>{{d.pollQuestionList[i].id}}</td>
+            <td class="text-center">{{d.pollQuestionList[i].content}}</td>
+            <td class="text-center">{{# if(d.pollQuestionList[i].enabled){ }}
+                        是
+            {{# } else{ }}
+                        否
+            {{# } }} </td>
+            <td class="text-center">            
+                {{# if(d.pollQuestionList[i].type==0){ }}单选题 {{# } }}
+                {{# if(d.pollQuestionList[i].type==1){ }}多选题 {{# } }}
+                {{# if(d.pollQuestionList[i].type==2){ }}填空题 {{# } }}
+                {{# if(d.pollQuestionList[i].type==3){ }}问答题 {{# } }}
+            </td>
+            <td class="text-left"><!--{{d.pollQuestionList[i].option}}-->
+                {{# if(d.pollQuestionList[i].type==0 || d.pollQuestionList[i].type==1){ }}
+
+                {{# if (d.pollQuestionList[i].optionList !=null){ }}
+                    {{# for(var j = 0, oplen = d.pollQuestionList[i].optionList.length; j < oplen; j++){ }}
+                         <div>{{d.pollQuestionList[i].optionList[j].identifier}}.{{d.pollQuestionList[i].optionList[j].content}}</div> 
+                    {{# } }}
+
+                {{# } }}
+                {{# } }}
+            </td>
+        </tr>
+        {{# } }}
+
+        {{# }}}
+    </script>
+</div> 
+<script src="~/Areas/Admin/Views/Poll/QuestionPoll.js"></script>

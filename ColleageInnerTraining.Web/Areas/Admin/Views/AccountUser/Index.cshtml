@@ -1,0 +1,37 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.UserAccount;
+    ViewBag.MenuId = PageNames.ManagemnetKey.UserAccount;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="Container w">
+    <div class="content fr">
+        <div class="rightTop">
+            <p>会员管理</p>
+            <ul class="subnav">
+                <li>
+                    <a class="btn btn_yanhse" id="Synchronization">用户信息同步</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="title_btn fl w100">
+            <div class="fl">
+                <label class="fl f14 l28">名称：</label>
+                <input type="text" class="form-control w160 fl" id="name" />
+                <label class="fl f14 l28 mf30">部门：</label>
+                @Html.DropDownList("tetDepartment", new List<SelectListItem>(), ("请选择"), new { @class = "form-control w160 fl" })
+                <label class="fl f14 l28 mf30">岗位：</label>
+                @Html.DropDownList("txtJobPost", ViewBag.JobPostData as IEnumerable<SelectListItem>, ("请选择"), new { @class = "form-control w160 fl" })
+                <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+            </div>
+        </div>
+        <div id="dataListDiv">
+            @Html.Action("GetAccountUserDataList")
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/AccountUser/Index.js?v=@DateTime.Now"></script>

@@ -1,0 +1,76 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@using ColleageInnerTraining.Common
+@model ColleageInnerTraining.Web.Areas.Wap.Models.HomeViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Wap.Home; //页面路径
+}
+<div id="banner_slider" class="bannerslider">
+    <ul class="slides">
+        @for (int i = 0; i < Model.banners.Count; i++)
+        {
+            var banner = Model.banners[i];
+
+        <li>
+            <div class="slide">
+                <div class="caption"><a href="@banner.Link"><img src="@banner.ImageUrl" /> </a> </div>
+            </div>
+        </li>
+         
+        }
+    </ul>
+</div>
+<div class="w lesson_con">
+    <h3 class="c33 w94 A_title">最新课程</h3>
+
+    @for (int i = 0; i < Model.course3news.Count; i++)
+    {
+        var course = Model.course3news[i];
+      <div class="lesson_section w">
+        <a href="Course/CourseDetail?courseId=@course.Id"> <img class="fr" src="@course.ImageUrl" /> </a>
+        <div class="lesson-info">
+            <a href="/Wap/Course/CourseDetail?courseId=@course.Id">
+                <h4 class="c33 f100">@course.CourseName</h4>
+                <p class="c66 f90">@course.Description</p>
+                
+                <p class="overhide">
+                    <span class="fl c99">@course.CreationTime</span>
+                    @if (course.Type != (int)CourseType.Line)
+                    {
+                        <span class="fr c99">时长：@course.TimeLength 分钟</span>
+                    }
+                </p>
+            </a>
+        </div>
+    </div>
+    }
+</div>
+<div class="w lesson_con">
+
+
+@for (int i = 0; i < Model.TopCategory.Count; i++)
+{
+    var category = Model.TopCategory[i];
+    <h3 class="c33 w94 A_title">@category.CourseCategoryName</h3>
+    for (int j = 0; j < Model.TopCategory[i].CourseInfoList.Count; j++)
+    {
+     var course  = Model.TopCategory[i].CourseInfoList[j];
+    <div class="lesson_section w">
+        <a href="Course/CourseDetail?courseId=@course.Id"> <img class="fr" src="@course.ImageUrl" /> </a>
+        <div class="lesson-info">
+            <a href="/Wap/Course/CourseDetail?courseId=@course.Id">
+                <h4 class="c33 f100">@course.CourseName</h4>
+                <p class="c66 f90">@course.Description</p>
+                <p class="overhide"><span class="fl c99">@course.CreationTime</span>
+                    @if (course.Type != (int)CourseType.Line)
+                    {
+                        <span class="fr c99">时长：@course.TimeLength 分钟</span>
+                    }
+                </p>
+            </a>
+        </div>
+    </div>
+    }
+}
+</div>
+<script src="~/Areas/Wap/Views/Home/index.js"></script>

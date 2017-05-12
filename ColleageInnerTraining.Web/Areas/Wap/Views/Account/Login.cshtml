@@ -1,0 +1,68 @@
+﻿@using System.Threading
+@using System.Web.Optimization
+@using Abp.Timing
+@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Bundling
+
+@model ColleageInnerTraining.Web.Wap.Models.Account.LogInViewModel
+
+@{
+    SetAntiForgeryCookie();
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="pragram" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0; minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    @Styles.Render("~/Bundles/Wap/css")
+</head>
+
+<body class="bgyanse">
+    <form method="post" action="~/Wap/Account/Login">
+        @Html.AntiForgeryToken()      
+        <div class="Amain">
+            <img class="login_logo" src="~/images/wapimgs/loginlogo.png" />
+            <ul class="Alogoin-ul">
+                <li>
+                    <div class="login_box">
+                        <i class="icon_name"></i><!--请输入邮箱/手机号/  -->
+                        <input name="username" id="username" value="" type="text" placeholder="账号" onfocus="if (value == '请输入账号') { this.style.color = '#333'; value = '' }" onblur="    if (value == '') { this.style.color = '#333'; value = '请输入账号' }">
+                    </div>
+                </li>
+                <li>
+                    <div class="login_box">
+                        <i class="icon_pwd"></i>
+                        <input id="password" name="password" value="" type="password" placeholder="请输入密码" onfocus="if(value=='请输入密码'){this.style.color='#333';value=''}" onblur="if(value==''){this.style.color='#333';value='请输入密码'}">
+                    </div>
+                </li>
+                <li class="text-right">
+                    <a class="cff f14 pr15">忘记密码请联系管理员重置密码</a>
+                </li>
+                <li>
+                    <div class="login_box">
+                        <input type="submit" value="登  录" />
+                        
+                    </div>
+                    <div style="color:white;line-height:45px;">
+                        @Model.SuccessMessage
+                    </div>
+                </li>
+                @Html.Hidden("ReturnUrl")
+            </ul>
+            <img class="login_bg w" src="~/images/wapimgs/loginbg.png" />
+        </div>
+        </form>
+</body>
+
+@Scripts.Render("~/Bundles/Wap/libs/js")
+@Scripts.Render("~/Bundles/Wap/js")
+</html>

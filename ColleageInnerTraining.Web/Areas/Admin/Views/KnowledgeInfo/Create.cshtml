@@ -1,0 +1,71 @@
+﻿@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Application.Dtos.KonwledgeInfoEditDto
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.KnowledgeInfo;
+    ViewBag.MenuId = PageNames.ManagemnetKey.KnowledgeInfo;
+
+    var type = new List<SelectListItem> { new SelectListItem { Value = "1", Text = "部门" }, new SelectListItem { Value = "2", Text = "岗位" } };
+
+}
+<style>
+    #editor {
+        margin-left: 220px;
+        margin-top: -25px;
+    }
+</style>
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <div class="fl">
+            @*<a class="btn btn_yanhse fl mf30" href="ClassesManageCreate?cId=0">添加</a>*@
+            <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+        </div>
+    </div>
+    @using (Html.BeginForm("Save", "KnowledgeInfo", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="content_form">
+            <li>
+                @Html.HiddenFor(t => t.Id)
+                @Html.Label("标题：")
+                @Html.TextBoxFor(t => t.Title, new { @class = "form-control", @required = "required", @placeholder = "请输入标题" })
+                @Html.Label("标签：")
+                @Html.DropDownListFor(t => t.TagetId, ViewBag.Tagets as List<SelectListItem>, "请选择", new { @class = "form-control", @required = "required" })
+            </li>
+            <li>
+                @Html.Label("类型：")
+                @Html.DropDownListFor(t=>t.TypeId, new List<SelectListItem>(), new { @class = "form-control", @required = "required"})             
+                @*@Html.Label("类型名称：")
+                @Html.DropDownList("Department", ViewBag.Departments as List<SelectListItem>, new { @class = "form-control", @required = "required" })
+                @Html.DropDownList("Job", ViewBag.Jobs as List<SelectListItem>, new { @class = "form-control hidden", @required = "required" })
+                @Html.HiddenFor(t => t.TypeId)*@
+            </li>
+            <li>
+                @Html.HiddenFor(t => t.ImageUrl)
+                @Html.Label("资料：")
+                <img id="previewimg" src="@(Model==null?"":Model.ImageUrl)" style="width:200px;height:150px" />
+                <a href="javascript:" class="personalFile"><input type="file" accept="image/x-png,image/gif,image/jpeg,image/bmp" name="uploadbtn" id="uploadbtn"></a><br />
+                <span style="margin-left:150px">图片应为jpg、png格式，建议为<b class="yanhse">190*170</b>像素</span>
+                @Html.Label("状态：")
+                <div class="radio_box">
+                    @Html.RadioButtonFor(t => t.Enabled, true, new { @checked = "true" }) 是
+                    @Html.RadioButtonFor(t => t.Enabled, false) 否
+                </div>
+            </li>
+            <li>
+                @Html.Label("内容：")
+                @Html.HiddenFor(t => t.Content)
+                <div>
+                    <script id="editor" type="text/plain" class="details">
+                    </script>
+                </div>
+            </li>
+            <li style="margin-top:10px;">
+                <input type="submit" onclick="getContent()" class="btn btn_yanhse fl mf120" value="提交" />
+                <input type="button" class="btn btn_huise fl mf50" value="取消" onclick="commonJs.go('Index')" />
+            </li>
+        </ul>
+    }
+</div>
+<div class="clearfix"></div>
+<script src="~/Areas/Admin/Views/KnowledgeInfo/create.js?t=@DateTime.Now"></script>

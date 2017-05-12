@@ -1,0 +1,58 @@
+﻿@using System.Threading
+@using System.Web.Optimization
+@using Abp.Timing
+@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Bundling
+@{
+    ViewBag.Title = "登录";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>国资商学院-登录</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    @Scripts.Render("~/Bundles/Admin/libs/js")
+    @Scripts.Render("~/Bundles/Admin/js")
+</head>
+<body>
+    <div class="header">
+        <div class="w">
+        </div>
+    </div>
+    <!--header-->
+    <div class="Logobar">
+        <div class="w">
+            <a class="logo fl logo_login" href="/" title="国资商学院">
+                <img class="fl" src="/images/LOGO.png" alt="国资商学院" />  <span class="fl">欢迎登录</span>
+            </a>
+        </div>
+    </div>
+    <div class="loginban">
+        <div class="w">
+            <form method="post" class="login_form" action="~/Admin/Account/Login">
+                @Html.AntiForgeryToken()
+                <div class="Login_box right">
+                    <h2>用户登录 </h2>
+                    <div class="Login_input">
+                        <i class="icon-user"></i>
+                        <input type="text" id="username" name="username" value="" />
+                    </div>
+                    <div class="Login_input">
+                        <i class="icon-lock"></i>
+                        <input type="password" name="password" value="" />
+                    </div>
+                    <div class="Login_btn">
+                        <button type="submit" name="login_submit" class="iLc-submit-btn">登    录</button>
+                        <a class="fl lanse" href="" target="_blank">忘记登录密码？</a>
+                    </div>
+                    @Html.Hidden("ReturnUrl")
+                </div>
+            </form>
+        </div>
+    </div>
+    @Html.Action("Footer", "Layout", new { currentPageName = ViewBag.CurrentPageName })
+</body>
+</html>
+

@@ -1,0 +1,21 @@
+﻿@model Abp.Application.Services.Dto.PagedResultDto<ColleageInnerTraining.Application.Dtos.CourseBoundConfigureTypeListDto>
+@using ColleageInnerTraining.Common
+<table class="table_info">
+    <tr>
+        <th class="col-xs-3 text-center">课程名称</th>
+        <th class="col-xs-3 text-center">类型名称</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.CourseName</td>
+            <td>@item.BusinessName</td>
+            <td>
+                <a class="yanhse" onclick="remove(@item.type,@item.BusinessId)">删除</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}
+

@@ -1,0 +1,37 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Exam; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Exam;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+
+<div class="content fr">
+    <div class="col-lg-6">
+        <ul id="knowledgeTree" class="ztree"></ul>
+        <ul>
+            <li><input id="addParent" type="button" class="btn btn_yanhse fl" title="新增父节点" value="新增父节点" />  
+            <input id="saveknowledgeTree" type="button" class="btn btn_yanhse fl mf120" value="保存" title="保存" /></li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<style type="text/css">
+    .ztree li span.button.add {
+        margin-left: 2px;
+        margin-right: -1px;
+        background-position: -144px 0;
+        vertical-align: top;
+        *vertical-align: middle;
+    }
+</style>
+<script type="text/javascript"> 
+        //var token = $('[name=__RequestVerificationToken]');
+        //获取防伪标记
+        var token = $('@Html.AntiForgeryToken()').val();
+        var headers = {};
+        //防伪标记放入headers
+        //也可以将防伪标记放入data
+        headers["__RequestVerificationToken"] = token;
+</script>
+<script src="~/Areas/Admin/Views/Exam/Index.js?v=1"></script>

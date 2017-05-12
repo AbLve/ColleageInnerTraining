@@ -1,0 +1,43 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.PollViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Poll; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Poll;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+
+
+
+<div class="content fr">
+
+    <div class="title_btn fl w100 mt20">
+        <div class="fl">
+           
+            <a class="btn btn_yanhse fl mf30" href="#">新增问卷</a>
+            <a class="btn btn_yanhse fl mf30" href="index">返回</a>
+
+        </div>
+    </div>
+
+    <form>
+
+        <ul class="content_form">
+
+            <li>
+                <label>问卷名称：</label>
+                <input id="pollName" name="pollName" maxlength="60" type="text" placeholder="问卷名称" class="form-control w400 fl">
+            </li>
+            <li>
+                <label>	问卷描述：</label>
+                <textarea id="pollDescription" name="pollDescription" placeholder="问卷描述" type="text" class="form-control w400 fl"></textarea>
+            </li>
+        </ul>
+
+        <div class="clearfix"></div>
+        <div class="h20"></div>
+        <button type="button" id="formSave" class="btn btn_yanhse mf120 fl">保存</button>
+        <button type="button" id="formReset" class="btn btn_yanhse mf50 fl">取消</button>
+    </form>
+</div> 
+<script src="~/Areas/Admin/Views/Poll/CreatePoll.js"></script>

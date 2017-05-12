@@ -1,0 +1,25 @@
+﻿@model Abp.Application.Services.Dto.PagedResultDto<ColleageInnerTraining.Application.Dtos.CourseBoundDeparmentAndJobPostListDto>
+@using ColleageInnerTraining.Common
+<table class="table_info">
+    <tr>
+        <th class="col-xs-3 text-center">课程名称</th>
+        <th class="col-xs-3 text-center">部门名称</th>
+        <th class="col-xs-3 text-center">岗位名称</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.CourseName</td>
+            <td>@item.DepartmentName</td>
+            <td>@item.JobpostName</td>
+            <td>
+                <a class="yanhse" onclick="remove('@item.CourseId','@item.DepartmentId','@item.JobpostId')">取消绑定</a>                 
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}
+<script type="text/javascript">
+
+</script>

@@ -1,0 +1,102 @@
+﻿@using ColleageInnerTraining.Web.Navigation;
+@using ColleageInnerTraining.Common;
+@using ColleageInnerTraining.Common.Utils;
+@model ColleageInnerTraining.Application.Dtos.UserAccountEditDto
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.UserAccount;
+    ViewBag.MenuId = PageNames.ManagemnetKey.UserAccount;
+}
+<script src="~/libs/provincial-city/DistrictJson.js" charset="gbk"></script>
+<script src="~/libs/provincial-city/ProJson.js" charset="gbk"></script>
+<script src="~/libs/provincial-city/CityJson.js" charset="gbk"></script>
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="Container w">
+    <div class="rightTop">
+        <p>会员管理</p>
+        <ul class="subnav">
+            <li>
+                <a class="btn btn_yanhse" href="/Admin/AccountUser/Index">返回</a>
+            </li>
+        </ul>
+    </div>
+    <div class="h20"></div>
+    <div class="content fr">
+        @using (Html.BeginForm("UpdataUser", "AccountUser", FormMethod.Post, new { id = "fmAccountUser", enctype = "multipart/form-data", role = "form" }))
+        {
+            <div class="hidden">
+                @Html.HiddenFor(t => t.Id)
+                @Html.HiddenFor(t => t.LoginName)
+                @Html.HiddenFor(t => t.SysNO)
+                @Html.HiddenFor(t => t.DisplayName)   
+                @Html.HiddenFor(t => t.PhoneNumber)
+                @Html.HiddenFor(t => t.Email)
+                @Html.HiddenFor(t => t.Status)
+                @Html.HiddenFor(t => t.ProvinceID)
+                @Html.HiddenFor(t => t.CityID)
+                @Html.HiddenFor(t => t.AreaID)
+                @Html.HiddenFor(t => t.province)
+                @Html.HiddenFor(t => t.City)
+                @Html.HiddenFor(t => t.Area)
+                @Html.HiddenFor(t => t.DepartmentID)
+                @Html.HiddenFor(t => t.DepartmentName)
+                @Html.HiddenFor(t => t.PostID)
+                @Html.HiddenFor(t => t.PostName)
+            </div>
+            @Html.AntiForgeryToken()
+            <ul class="content_form">
+                <li>
+                    <label>名称：</label>
+                    @Model.LoginName
+                </li>
+
+                <li>
+                    <label>手机号：</label>
+                    @Model.PhoneNumber
+                </li>
+                <li>
+                    <label>邮箱：</label>
+                    @Model.Email
+                </li>
+                <li>
+                    <label>部门：</label>
+                    @Html.DropDownList("Department", new List<SelectListItem>(), new { @class = "form-control short" })
+                </li>
+                <li>
+                    <label>岗位：</label>
+                    @Html.DropDownList("post", ViewBag.JobPostData as IEnumerable<SelectListItem>, new { @class = "form-control short" })
+                </li>
+                <li>
+                    <label>省：</label>
+                    <select class="form-control short" required id="selProvince"></select>
+                </li>
+                <li>
+                    <label>市：</label>
+                    <select class="form-control short" required id="selCity"></select>
+                </li>
+                <li>
+                    <label>区（县）：</label>
+                    <select class="form-control short" required id="selDistrict"></select>
+                </li>
+                <li>
+                    <label>详细地址：</label>
+                    @Html.TextBoxFor(t => t.DetailedAddress, new { @class = "form-control", @required= "required" })
+                </li>
+                <li>
+                    <input type="submit" class="btn btn_yanhse fl mf120" value="提交" />
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+    var ProvinceID = @Model.ProvinceID;
+    var CityID = @Model.CityID;
+    var AreaID = @Model.AreaID;
+    var DepartmentID = @Model.DepartmentID;
+    var PostID = @Model.PostID;    
+    $("#Department").bindSelect({
+        url: "GetTreeDepartSelectJson"
+    });
+</script>
+<script src="~/Areas/Admin/Views/AccountUser/UpdateAccountUser.js"></script>

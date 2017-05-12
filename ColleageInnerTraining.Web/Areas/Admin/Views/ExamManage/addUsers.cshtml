@@ -1,0 +1,76 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.ExamViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.ExamManage; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Exam;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<script type="text/javascript">
+
+    var examId = @Model.ExamId;
+
+</script>
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <div class="fl">
+            <a class="btn btn_yanhse fl mf30" href="addUsers?examId=@Model.ExamId">新增人员必考关系</a>
+            <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+        </div>
+    </div>
+    <div class="title_btn fl w100 mt20">
+        <label class="fl f14 l28 mf30">考试名称：</label>
+        <label id="examName" class="fl f14 l28 mf30"></label>
+        <label class="fl f14 l28 mf30">姓名：</label>
+        <input id="UserName" type="text" class="form-control w160 fl">
+
+        <div class="fl">
+            <input id="btnSearch" class="btn btn_yanhse fl mf30" type="button" value="搜索">
+            <a class="btn btn_yanhse fl mf30" id="formSave">添加用户</a>
+        </div>
+    </div>
+    <div style="margin-left:20px">
+        <table id="questionTable" class="table_info">
+            <tr>
+                <th width="50" style="text-align:center">选择</th>
+                <th width="80" class="text-center">序号</th>
+                <th width="180" class="text-center">员工姓名</th>
+                <th width="180" class="text-center">手机</th>
+                <th class="text-center">邮箱</th>
+
+            </tr>
+            <tbody id="Render_List"></tbody>
+        </table>
+        <div></div>
+    </div>
+</div>
+
+<script id="questions" type="text/html">
+    {{# if (d.Items!=null){ }}
+    {{# for(var i = 0, len = d.Items.length; i < len; i++){ }}
+    <tr>
+        <td><input id="selected" name="selected" type="radio" class="selected" value="{{d.Items[i].SysNO}},{{d.Items[i].DisplayName}}," /></td>
+        <td>{{d.Items[i].SysNO}}</td>
+        <td>
+            {{d.Items[i].DisplayName}}
+        </td>
+        <td>
+            {{d.Items[i].PhoneNumber}}
+        </td>
+        <td>
+            {{d.Items[i].Email}}
+        </td>
+   
+    </tr>
+    {{# } }}
+    <tr>
+        <td colspan="5">
+            <div class="page-foot" id="pager">
+
+            </div>
+        </td>
+    </tr>
+
+    {{# }}}
+</script> 
+<script src="~/Areas/Admin/Views/ExamManage/addUsers.js"></script>

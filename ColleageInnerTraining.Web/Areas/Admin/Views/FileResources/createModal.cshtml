@@ -1,0 +1,17 @@
+﻿@using ColleageInnerTraining.AbpZeroTemplate.MultiTenancy
+<div>
+    <form name="fileResourceCreateForm" role="form" novalidate class="form-validation">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <span>@L("CreateNewFileResources")</span>
+            </h4>
+        </div>
+        <div class="modal-body">{{vm.requestParams.apiUrl}}
+        <iframe ng-src="{{apiUrl}}" height="340" width="100%"></iframe>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-disabled="vm.saving" class="btn btn-default" ng-click="vm.cancel()">@L("Close")</button>
+        </div>
+    </form>
+</div>

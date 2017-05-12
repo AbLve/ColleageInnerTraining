@@ -1,0 +1,33 @@
+﻿@model List<ColleageInnerTraining.Application.Dtos.KonwledgeInfoListDto>
+<table class="table_info">
+    <tr>
+        <th class="col-xs-2 text-center">标题</th>
+        <th class="col-xs-1 text-center">发布者</th>
+        <th class="col-xs-1 text-center">创建时间</th>
+        <th class="col-xs-1 text-center">阅读量</th>
+        <th class="col-xs-1 text-center">收藏量</th>
+        <th class="col-xs-1 text-center">分类</th>
+        <th class="col-xs-1 text-center">标签</th>
+        <th class="col-xs-1 text-center">状态</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="td_p_l_5">@item.Title</td>
+            <td>@item.CreatorUserName</td>
+            <td>@item.CreationTime.ToString("yyyy-MM-dd")</td>
+            <td>@item.ReadingCount</td>
+            <td>@item.CollectionCount</td>
+            <td>@item.TypeName</td>
+            <td>@item.TagetName</td>
+            <td>@(item.Stauts == 1 ? "通过" : item.Stauts == 2 ? "未通过" : "待审核") </td>
+            <td>
+                <a class="yanhse" href="/Admin/KnowledgeInfo/Create?id=@item.Id">修改</a> |
+                <a class="lanse" onclick="del(@item.Id)">删除</a> |
+                <a class="yanhse" href="/Admin/KnowledgeSet/Index?kId=@item.Id&kName=@item.Title">其他设置</a> 
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}

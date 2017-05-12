@@ -1,0 +1,46 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@using ColleageInnerTraining.Common;
+@using ColleageInnerTraining.Common.Utils;
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.CorseCheck;
+    ViewBag.MenuId = PageNames.ManagemnetKey.CorseCheck;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="Container w">
+    <div class="content fr">
+        <div class="rightTop">
+            <p>课程审核</p>
+            <ul class="subnav">
+                <li>
+                    <a class="btn btn_yanhse" href="/Admin/Course/CheckCourse">管理</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="title_btn fl w100">
+            <div class="fl">
+                <label class="fl f14 l28 mf30">课程名称：</label>
+                <input id="courseName" type="text" class="form-control w160 fl" />
+                <label class="fl f14 l28 mf30">内训师：</label>
+                <input id="txtTeacherName" type="text" class="form-control w160 fl" />
+            </div>
+        </div>
+
+        <div class="title_btn fl w100 mt20">
+            <div class="fl">
+                <label class="fl f14 l28 mf30">类型：</label>
+                @Html.DropDownList("txtType", UiKit.PopulateDropdown<CourseType>(""), new { @class = "form-control w160 fl" })
+                <label class="fl f14 l28 mf30">分类：</label>
+                @Html.DropDownList("txtCate", ViewBag.CourseCategoryData as IEnumerable<SelectListItem>, ("请选择"), new { @class = "form-control w160 fl" })
+                <input class="btn btn_yanhse fl mf30" type="submit" value="搜索" />
+            </div>
+        </div>
+
+        <div id="dataListDiv">
+            @Html.Action("GetCheckCourseDataList")
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="~/Areas/Admin/Views/Course/CheckCourse.js?v=@DateTime.Now" charset="gbk"></script>

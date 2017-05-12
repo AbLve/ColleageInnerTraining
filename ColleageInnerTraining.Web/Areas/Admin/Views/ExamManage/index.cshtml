@@ -1,0 +1,110 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using Abp.Application.Services.Dto
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Admin.Models.ExamViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.ExamManage; //The menu item will be active for this page.
+    ViewBag.MenuId = PageNames.ManagemnetKey.Exam;
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+
+    <div class="title_btn fl w100">
+        <div class="fl">
+            
+            <label class="fl f14 l28 mf30">名称：</label>
+
+            <input id="name" type="text" class="form-control w160 fl">
+
+            <label class="fl f14 l28 mf30">状态：</label>
+            <select id="status" class="form-control w160 fl">
+                <option value="">请选择</option>
+                <option value="0">草稿</option>
+                <option value="1">未开始</option>
+                <option value="2">进行中</option>
+                <option value="3">已结束</option>
+            </select>
+            <label class="fl f14 l28 mf30">有效状态：</label>
+            <select id="enabled" class="form-control w160 fl">
+                <option value="">请选择</option>
+                <option value="1">有效</option>
+                <option value="0">无效</option>
+            </select>
+            <label class="fl f14 l28 mf30">部门：</label>            
+            @Html.DropDownList("departmentId", Model.departLists.Select(i => i.ToSelectListItem()),
+                                new
+                                {
+                                    @class = "form-control w160 fl",
+                                    data_live_search = "true",
+                                    data_none_selected_text = "",
+                                    id = "departmentId"
+                                })
+
+        </div>
+    </div>
+    <div class="title_btn fl w100 mt20">
+        
+
+        <div class="fl">
+            <input id="btnSearch" class="btn btn_yanhse fl mf30" type="button" value="搜索">
+            <a class="btn btn_yanhse fl mf30" href="CreateExam">新增考试</a>
+        </div>
+    </div>
+    <div style="margin-left:20px">
+        <table id="questionTable" class="table_info">
+            <tr>
+                <th width="50" class="text-center"><input type="checkbox" id="checkAll" name="checkAll" value="0" /></th>
+                <th width="80" class="text-center">序号</th> 
+                <th width="180" class="text-center">考试名称</th> 
+                <th class="text-center">是否有效</th>
+                <th class="text-center">通过分数</th>
+                <th class="text-center">可考次数</th>
+                <th class="text-center">考试状态</th>
+                <th class="text-center">开始时间</th>
+                <th class="text-center">结束时间</th>
+                <th class="text-center">操作</th>
+                
+            </tr>
+            <tbody id="Render_List"></tbody>
+        </table>
+        <div></div>
+    </div>
+
+
+
+</div>
+
+<script id="questions" type="text/html">
+    {{# if (d.data!=null){ }}
+    {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
+    <tr>
+        <td><input id="selected" name="selected" type="checkbox" class="selected" value="{{d.data[i].id}}" /></td>
+        <td>{{d.data[i].id}}</td>
+        <td>{{d.data[i].name}}</td>
+        <td>{{# if(d.data[i].enabled){ }}
+        是
+{{# } else{ }}
+        否
+{{# } }}</td>
+        <td>{{d.data[i].score}}</td>
+        <td>{{d.data[i].number}}</td>
+        <td>{{d.data[i].statusName}}</td>
+        <td>{{d.data[i].startTime}}</td>
+        <td>{{d.data[i].endTime}}</td>
+        <td><a href="PaperManage?examId={{d.data[i].id}}">配置试卷</a> 
+            <a href="SetRelation?examId={{d.data[i].id}}">配置必考关系</a>
+            <a href="SetUsers?examId={{d.data[i].id}}">配置人员</a>
+        <a href="EditExam?examId={{d.data[i].id}}">编辑</a>  <a id="deleteExam" class="deleteExam" href="#" title="{{d.data[i].id}}">删除</a></td>
+    </tr>
+    {{# } }}
+
+    <tr>
+        <td colspan="10">
+            <div class="page-foot" id="pager">
+
+            </div>
+        </td>
+    </tr>
+    {{# }}}
+</script> 
+<script src="~/Areas/Admin/Views/ExamManage/index.js"></script>

@@ -1,0 +1,49 @@
+﻿@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Web.Areas.Wap.Models.ExamViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Wap.Member; //页面路径
+}
+
+<ul class="user_center">
+    <li onclick="window.location.href=">
+        <a  href="/Wap/Member/Courseing">
+            <i class="icon icon1"></i>我的课程
+        </a>
+    </li>
+    <li>
+        <a href="/Wap/Member/Training">
+            <i class="icon icon2"></i>我的培训
+        </a>
+    </li>
+
+    <li>
+        <a href="/Wap/Exam">
+            <i class="icon icon3"></i>考试管理
+        </a>
+    </li>
+    <li>
+        <a href="">
+            <i class="icon icon4"></i>我的互动
+        </a>
+    </li>
+    <li>
+        <a href="/Wap/Member/Collection">
+            <i class="icon icon5"></i>我的收藏
+        </a>
+    </li>
+    <li>
+        <a href="">
+            <i class="icon icon6"></i>帐号管理
+        </a>
+    </li>
+    <li>
+        <a href="/Wap/poll">
+            <i class="icon icon7"></i>我的问卷
+        </a>
+    </li>
+
+</ul>
+
+<div class="h20"></div>
+<div class="h100"></div>

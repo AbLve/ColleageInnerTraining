@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ColleageInnerTraining.Application.Dtos.ClassesInfoListDto>
+<table class="table_info">
+    <tr>
+        <th class="col-xs-2 text-center">班级</th>
+        <th class="col-xs-1 text-center">人数</th>
+        <th class="col-xs-2 text-center">课程</th>
+        <th class="col-xs-1 text-center">问卷</th>
+        <th class="col-xs-2 text-center">线下培训</th>
+        <th class="col-xs-1 text-center">考试</th>
+        <th class="text-center">操作</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align:left;padding-left:5px">@item.ClassesName</td>
+            <td>@item.MemberCount</td>
+            <td>@item.CourseCount</td>
+            <td>@item.PollCount</td>
+            <td>@item.TrainCount</td>
+            <td>@item.ExamCount</td>
+            <td>
+                <a class="yanhse" href="/Admin/Classes/ClassesMemberIndex?cName=@item.ClassesName&cId=@item.Id">班级成员管理</a> |
+                <a class="yanhse" href="/Admin/Classes/ClassesProjectIndex?cName=@item.ClassesName&cId=@item.Id">班级项目管理</a> <br />
+                <a class="yanhse" href="/Admin/ClassDepJob/Index?cName=@item.ClassesName&cId=@item.Id">其他设置</a> |
+                <a class="yanhse" href="/Admin/Classes/ClassesManageCreate?cId=@item.Id">修改</a> |
+                <a class="lanse" onclick="del(@item.Id)">删除</a>
+            </td>
+        </tr>
+    }
+</table>
+@{Html.RenderPartial("~/Areas/Admin/Views/Shared/Pager.cshtml");}

@@ -1,0 +1,68 @@
+﻿@using ColleageInnerTraining.Web.Navigation
+@model ColleageInnerTraining.Application.Dtos.NoticeEditDto
+@{
+    ViewBag.CurrentPageName = PageNames.Managemnet.Notice;
+    ViewBag.MenuId = PageNames.ManagemnetKey.Notice;
+
+    var sdate = Model == null ? "" : Model.StartTime.ToString("yyyy-MM-dd");
+    var edate = Model == null ? "" : Model.EndTime.ToString("yyyy-MM-dd");
+
+}
+@Html.Action("Left", "Layout", new { currentPageName = ViewBag.CurrentPageName, menuId = ViewBag.MenuId })
+<div class="content fr">
+    <div class="title_btn fl w100">
+        <div class="fl">
+            @*<a class="btn btn_yanhse fl mf30" href="ClassesManageCreate?cId=0">添加</a>*@
+            <a class="btn btn_yanhse fl mf30" href="javascript:window.history.back();">返回</a>
+        </div>
+    </div>
+    @using (Html.BeginForm("Save", "Notice", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="content_form">
+            <li>
+                @Html.HiddenFor(t => t.Id)
+                @Html.Label("标题：")
+                @Html.TextBoxFor(t => t.Title, new { @class = "form-control", @required = "required", @placeholder = "请输入标题" })
+                @Html.Label("状态：")
+                <div class="radio_box">
+                    @Html.RadioButtonFor(t => t.Enabled, true, new { @checked = "true" }) 启用
+                    @Html.RadioButtonFor(t => t.Enabled, false) 禁用
+                </div>
+            </li>
+            <li>
+                @Html.Label("开始时间：")
+                @Html.TextBox("StartTime", sdate, new { @class = "form-control input-wdatepicker", @placeholder = "请选择时间", @readOnly = "readOnly", @onfocus = "WdatePicker()" })
+                @Html.Label("结束时间：")
+                @Html.TextBox("EndTime", edate, new { @class = "form-control input-wdatepicker", @placeholder = "请选择时间",  @readOnly = "readOnly", @onfocus = "WdatePicker()" })
+            </li>
+            <li>
+                @Html.HiddenFor(t => t.ImageUrl)
+                @Html.Label("素材：")
+                <img id="previewimg" src="@(Model==null?"":Model.ImageUrl)" style="width:200px;height:150px" />
+                <a href="javascript:" class="personalFile"><input type="file" accept="image/x-png,image/gif,image/jpeg,image/bmp" name="uploadbtn" id="uploadbtn"></a><br />
+                <span style="margin-left:150px">图片应为jpg、png格式，建议为<b class="yanhse">190*170</b>像素</span>
+            </li>
+            <li>
+                @Html.Label("内容：")
+                @Html.HiddenFor(t => t.Content)
+                <div>
+                    <script id="editor" type="text/plain" class="details">
+                    </script>
+                </div>
+            </li>
+            <li style="margin-top:10px;">
+                <input type="submit" onclick="getContent()" class="btn btn_yanhse fl mf120" value="提交" />
+                <input type="reset" class="btn btn_huise fl mf50" value="取消" />
+            </li>
+        </ul>
+    }
+</div>
+<div class="clearfix"></div>
+<script src="~/Areas/Admin/Views/Notice/create.js?v=@DateTime.Now"></script>
+<style>
+    #editor {
+        margin-left: 220px;
+        margin-top: -25px;
+    }
+</style>

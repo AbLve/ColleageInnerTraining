@@ -1,0 +1,155 @@
+﻿@using System.Threading
+@using System.Web.Optimization
+@using Abp.Timing
+@using Abp.Web.Mvc.Extensions
+@using ColleageInnerTraining.Web.Bundling
+@model ColleageInnerTraining.Web.Areas.Wap.Models.ExamViewModel
+@{
+    SetAntiForgeryCookie();
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我要考试</title>
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="pragram" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0; minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    @Styles.Render("~/Bundles/Wap/css")
+    @Scripts.Render("~/Bundles/Wap/libs/js")
+    @Scripts.Render("~/Bundles/Wap/js")
+    <script type="text/javascript">
+        @* This is used to get the application's root path from javascript.
+        It's useful if you're running application in a virtual directory under IIS. *@
+        var abp = abp || {}; abp.appPath = '@ApplicationPath';
+    </script>
+    <script type="text/javascript">
+
+        var examId = @Model.ExamId;
+        var courseId = @Model.CourseId;
+    </script>
+</head>
+<body>
+    <div class="Amain">
+        <div class="wpd94 exam_header overhide">
+            <!--考试头部 -->
+                <span id="duration" class="fl c33"></span> <a href="javascript:;" id="submit" class="fr btn btn_yanse cff">交卷</a>
+        </div>
+        <!--试题-->
+            <div id="questionWrapper" class="w exam_con">
+
+            </div>
+            <!--翻页-->
+                <div class="w exam_btn">
+                    <input type="hidden" id="curIndex" value="0" />
+                    <a id="prev" class="">上一题</a> <a id="next">下一题</a>
+                </div>
+
+                <div class="h100"></div>
+                <div class="h100"></div>
+                <div class="exam-opbg hide"></div>
+                <div class="exam-footer">
+                    <!--考试尾部-->
+                        <div id="examFooter" class="exam_fix">
+
+                        </div>
+                </div>
+    </div>
+</body>
+<!--试题模板-->
+    <script id="questions" type="text/html">
+        <!--当前题/题数-->
+        <input type="hidden" id="questionNumber" value="{{d.paper.number}}">
+        <input type="hidden" id="recordId" value="{{d.record.id}}">
+        <h3 id="totalNumber" class="c33 f100 text-center">1/{{d.paper.number}}</h3>
+        <!--循环章-->
+            {{# var qNum = 1;}}
+            {{# for(var i = 0, len = d.chapters.length; i < len; i++){ }}
+            {{#var chapter = d.chapters[i];}}
+            <!--循环章下面的试题-->
+                {{# for(var j = 0, jlen = chapter.sections.length; j < jlen; j++){ }}
+                {{#var section = chapter.sections[j];}}
+                {{#var recordItem = section.record;}}
+                {{#var hide = 'hide'; if(i==0 && j==0){ hide = ''; }}}
+                <div class="exam_section question_section {{hide}}">
+                    <!--题干-->
+                        {{# if(section.question.type == 'BLANK'){  }}
+                        <h1>第{{qNum++}}题：{{section.wapBlankContent}}</h1>
+                        {{# }else{ }}
+                        <h1>第{{qNum++}}题：{{section.question.content}}</h1>
+                        {{# }}}
+                        <!--选项-->
+                            {{# if(section.question.type == 'SINGLE'){  }}
+                            <!--单选题-->
+                                {{# for(var k=0, klen = section.question.questionAnswer.options.length; k < klen; k++){ }}
+                                {{# var option = section.question.questionAnswer.options[k]; }}
+                                {{# var checked = '';}}
+                                {{# if(option.identifier == section.recordItem.answer) {checked = 'checked';}}}
+                                <div class="qu_radio"><input type="radio" {{checked}} name="{{section.recordItem.id}}" data-type="{{section.question.type}}" data-ident="{{option.identifier}}" /> {{option.identifier}}. {{option.content}}</div>
+                                {{# } }}
+                                {{# }else if(section.question.type == 'MULTI' || section.type == 'INDEF'){ }}
+                                <!--多选题/不定项选择题-->
+                                {{# for(var k=0, klen = section.question.questionAnswer.options.length; k < klen; k++){ }}
+                                {{# var option = section.question.questionAnswer.options[k]; }}
+                                {{# var checked = 'checked', answer=''; if(section.recordItem.answer){ answer = section.recordItem.answer;} }}
+                                {{# if(answer.indexOf(option.identifier) == -1){ checked = ''} }}
+                                <div class="qu_radio"><input type="checkbox" {{checked}} data-a="{{answer}}" name="{{section.recordItem.id}}" data-type="{{section.question.type}}" data-ident="{{option.identifier}}" /> {{option.identifier}}. {{option.content}}</div>
+                                {{# } }}
+                                {{# }else if(section.question.type == 'JUDGE'){ }}
+                                <div class="qu_radio">
+                                    {{# var yes = '', no = ''; }}
+                                    {{# if(section.recordItem.answer == 'Y') {yes = 'checked';} else if(section.recordItem.answer == 'N'){ no = 'checked';} }}
+                                    <input type="radio" {{yes}} name="{{section.recordItem.id}}" data-type="{{section.question.type}}" data-ident="Y" /> 正确
+                                    <input class="ml30" {{no}} type="radio" name="{{section.recordItem.id}}" data-type="{{section.question.type}}" data-ident="N" /> 错误
+                                </div>
+                                {{# }else if(section.question.type == 'ESSAY'){}}
+                                {{# var answer=''; if(section.recordItem.answer){ answer = section.recordItem.answer;} }}
+                                <textarea class="exam_textarea" data-type="{{section.question.type}}" name="{{section.recordItem.id}}">{{answer}}</textarea>
+                                {{# } }}
+                                <!--/题干-->
+                                <div class="h20"></div>
+                                <div class="h20"></div>
+                                <!--<a href="" class="btn btn_juse">标记</a>-->
+                </div>
+                {{# } }}
+                <!--/for sections-->
+                {{# } }}
+                <!--/for chapters-->
+
+    </script>
+
+    <!--考试尾部模板-->
+        <script id="footer" type="text/html">
+            <div class="w exam_tab">
+                {{# var num = 1; }}
+
+
+                {{# for(var i = 0, len = d.chapters.length; i < len; i++){ }}
+                {{# var chapter = d.chapters[i]; }}
+                {{# var cur = ''; if(i==0){ cur ='cur'; }}}
+                <span class="{{cur}}">{{chapter.chapterName}}</span>
+                {{# } }}
+            </div>
+            <div class="w exam-con hide">
+                {{# var index=0; }}
+                {{# for(var i = 0, len = d.chapters.length; i < len; i++){ }}
+                {{# var chapter = d.chapters[i];}}
+                {{# var qNums = chapter.totalNumber;}}
+                {{# var hide = 'hide'; if(i==0){hide = ''; }}}
+                <div class="exam_tnum {{hide}}">
+                    {{# for(var j=0; j<qNums; j++){}}
+                    <a class="footerNav" data-index="{{index++}}">{{num++}}</a>
+                    {{# }}}
+                </div>
+                {{# } }}
+            </div>
+        </script>
+
+        
+</html>
+<script src="~/Areas/Wap/Views/Exam/Examing.js?v=1.0"></script>

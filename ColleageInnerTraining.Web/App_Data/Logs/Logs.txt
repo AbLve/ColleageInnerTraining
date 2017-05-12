@@ -3388,3 +3388,7 @@ INFO  2017-05-12 11:43:41,592 [16   ] Abp.Auditing.SimpleLogAuditingStore      -
 INFO  2017-05-12 11:43:41,630 [16   ] Abp.Auditing.SimpleLogAuditingStore      - AUDIT LOG: ColleageInnerTraining.Application.MenuAppService.GetMenusByParentId is executed by an anonymous user in 36 ms from 192.168.36.1 IP address with succeed.
 INFO  2017-05-12 11:43:41,681 [16   ] Abp.Auditing.SimpleLogAuditingStore      - AUDIT LOG: ColleageInnerTraining.Application.KonwledgeInfoAppService.GetPagedKonwledgeInfos is executed by an anonymous user in 45 ms from 192.168.36.1 IP address with succeed.
 INFO  2017-05-12 11:43:41,712 [16   ] Abp.Auditing.SimpleLogAuditingStore      - AUDIT LOG: ColleageInnerTraining.Application.MenuAppService.GetMenusByParentId is executed by an anonymous user in 26 ms from 192.168.36.1 IP address with succeed.
+DEBUG 2017-05-12 12:01:27,893 [30   ] Abp.Modules.AbpModuleManager             - Shutting down has been started
+DEBUG 2017-05-12 12:01:27,895 [30   ] Abp.BackgroundJobs.BackgroundJobManager  - Stop background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2017-05-12 12:01:27,895 [30   ] Abp.BackgroundJobs.BackgroundJobManager  - WaitToStop background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2017-05-12 12:01:27,895 [30   ] Abp.Modules.AbpModuleManager             - Shutting down completed.
